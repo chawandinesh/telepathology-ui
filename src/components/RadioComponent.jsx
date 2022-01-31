@@ -5,14 +5,14 @@ function RadioComponent({ name, label, register, errorMessage }) {
   return (
     <Form.Group className="mb-3 text__field" controlId="formBasicEmail">
       <Form.Label className="text-white">{label}</Form.Label>
-      <div className="d-flex justify-content-between w-25 mb-3">
-        <div class="form-check">
+      <div className="mb-3 d-flex">
+        <div class="form-check w-25">
           <input {...register("gender")} value="male" name="gender" class="form-check-input" type="radio" id="male" />
           <label class="form-check-label text-white pl-1 pr-2" for="male">
             Male
           </label>
         </div>
-        <div class="form-check">
+        <div class="form-check w-25">
           <input
             {...register("gender")}
             class="form-check-input"

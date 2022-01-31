@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import _ from "lodash";
 import TextFieldComponent from "../components/TextFieldComponent";
@@ -27,7 +28,6 @@ function PatientRecordEntry() {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm({ resolver: yupResolver(patientRegisterSchema) });
@@ -71,7 +71,7 @@ function PatientRecordEntry() {
             return (
               <>
                 {eachField.type === "image" ? (
-                  <ImageComponent />
+                  <ImageComponent register={register} />
                 ) : eachField.type === "radio" ? (
                   <RadioComponent
                     errorMessage={_.get(errors[eachField.name], "message", "")}
@@ -130,7 +130,7 @@ function PatientRecordEntry() {
               </>
             );
           })}
-          <Button className="w-100 mb-4" variant="primary" type="submit">
+          <Button className="w-100 mb-4 primary__btn" variant="primary" type="submit">
             Submit
           </Button>
         </form>
