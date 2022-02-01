@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import TextFieldComponent from "../components/TextFieldComponent";
 import "./patientrecordentry.css";
@@ -11,12 +11,15 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ImageComponent from "../components/ImageComponent";
-import PrefixNameComponent from "../components/PrefixNameComponent";
+import SelectComponent from "../components/SelectComponent";
 import { Form } from "react-bootstrap";
 import SecurityQuestionComponent from "../components/SecurityQuestionComponent";
-import logo from "../assets/images/medical.png"
-import logo1 from "../assets/images/recovered.png"
+import logo from "../assets/images/medical.png";
+import logo1 from "../assets/images/recovered.png";
+import ImageUpload from "../components/ImageUpload";
+import axios from "axios";
 function PatientRecordEntry() {
+  const [file, setFile] = useState(null);
   const patientRegisterSchema = yup.object().shape({
     firstName: yup.string().required("First name is required"),
     lastName: yup.string().required("Last name is required"),
@@ -28,6 +31,21 @@ function PatientRecordEntry() {
     height: yup.number().typeError("Must be a number").required("Required"),
     weight: yup.number().typeError("Must be a number").required("Required"),
     bloodgroup: yup.string().required("Blood group is required"),
+    ABHAHealthId: yup
+      .number()
+      .typeError("Must be a  number")
+      .required("ABHAHealthId Required")
+      .test("len", "Must be exactly 10 digits", (val) => val.toString().length === 10),
+    emergencyFirstName: yup.string().required("Emergency First Name is Required"),
+    emergencyLastName: yup.string().required("Emergency Last Name is Required"),
+    emergencyRelationship: yup.string().required("Emergency Relationship is Required"),
+    emergencyPhone: yup.string().required("Emergency Phone is Required"),
+    password: yup.string().required("Password is required"),
+    confirmpassword: yup
+      .string()
+      .required("Confirm Password is required")
+      .oneOf([yup.ref("password"), null], "Passwords must match"),
+    securityAnswer: yup.string().required("Security answer requred"),
   });
   const {
     register,
@@ -38,22 +56,10 @@ function PatientRecordEntry() {
 
   const fields = [
     {
-      name: "name_prefix",
-      label: "Prefix",
-      type: "select"
-    },
-    {
-      name: "firstName",
-      label: "First Name",
-      type: "text",
-      placeholder: "First name",
-      validation: { required: true, maxLength: 20 },
-    },
-    {
-      name: "lastName",
-      label: "Last Name",
-      type: "text",
-      placeholder: "Last name",
+      name: "name",
+      label: "Name",
+      type: "all",
+      placeholder: "all",
     },
     { name: "dob", label: "DOB", type: "date", placeholder: "Date of birth" },
     { name: "gender", label: "Gender", type: "radio" },
@@ -81,10 +87,15 @@ function PatientRecordEntry() {
     {
       name: "maritalstatus",
       label: "Marital Status",
-      type: "text",
+      type: "select",
+      options: [
+        { label: "Single", name: "single" },
+        { label: "Married", name: "married" },
+        { label: "Diversed", name: "diversed" },
+        { label: "Widow", name: "widow" },
+      ],
       placeholder: "Marital Status",
     },
-    { name: "image", label: "Image", type: "image" },
     {
       name: "password",
       label: "Password",
@@ -97,35 +108,96 @@ function PatientRecordEntry() {
       type: "password",
       placeholder: "Confirm Password",
     },
+    { name: "image", label: "Image", type: "image" },
   ];
 
-  const questionField =[
+  const emergencyFields = [
     {
-      name:"securityQuestion",
-      type:"select",
-      label:"Security Question"
+      name: "emergencyFirstName",
+      label: "First Name",
+      type: "text",
+      placeholder: "First Name",
     },
     {
-      name:"securityAnswer",
-      type:"text",
-      label:"Your Answer"
-    }
-  ]
+      name: "emergencyLastName",
+      label: "Last Name",
+      type: "text",
+      placeholder: "Last Name",
+    },
+    {
+      name: "emergencyRelationship",
+      label: "Relationship",
+      type: "text",
+      placeholder: "Relationship",
+    },
+    {
+      name: "emergencyPhone",
+      label: "Phone",
+      type: "text",
+      placeholder: "Phone",
+    },
+  ];
+
+  const questionFields = [
+    {
+      name: "securityQuestion",
+      type: "select",
+      options: [
+        { label: "What is your date of birth?", name: "what is your date of birth?" },
+        { label: "Which is your favourite car?", name: "which is your favourite car?" },
+        { label: "What is your native place?", name: "what is your native place?" },
+        { label: "what is your favourite color?", name: "what is your favourite color?" },
+      ],
+      label: "Security Question",
+      placeholder: "Select a Security Question",
+    },
+    {
+      name: "securityAnswer",
+      type: "text",
+      label: "Your Answer",
+    },
+  ];
 
   useEffect(() => {
-    reset({ gender: "male" });
+    reset({ gender: "male", name_prefix: "mr" });
   }, []);
 
+  const getFile = (file) => {
+    setFile(file);
+  };
+  const formData = new FormData();
+
+  const postApi = async () => {
+    await axios({
+      method: "POST",
+      url: `https://doctor-patient-project.herokuapp.com/api/patient/addPatient`,
+      data: formData,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const onSubmit = (e) => {
-    console.log("submitted", e);
+    if (file) {
+      formData.append("image", file);
+    }
+    formData.append("data", JSON.stringify(e));
+
+    postApi();
   };
 
   return (
     <div className="patient__container">
       <div className="Main__wraper">
         <div className="add__record__container mb-5">
-          <span className="add__record__text">New  Patient Enrollment</span>
-          <span ><img src={logo1} className="patient_logo"></img></span>
+          <span className="add__record__text">New Patient Enrollment</span>
+          <span>
+            <img src={logo1} className="patient_logo"></img>
+          </span>
         </div>
         <div className="patient__form__container">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -133,44 +205,87 @@ function PatientRecordEntry() {
               const { type, label, placeholder, name } = eachField;
               return (
                 <>
-                  {eachField.type === "image" ? (
-                    <ImageComponent register={register} />
+                  {eachField.name === "name" ? (
+                    <Row>
+                      <hr className="hr__tag mt-0 mb-4" />
+                      <h2 className="text-white mb-3">Basic Details</h2>
+                      <Col xs={2}>
+                        {" "}
+                        <SelectComponent
+                          register={register}
+                          label="Prefix"
+                          name="name_prefix"
+                          options={[
+                            { label: "Mr", name: "mr" },
+                            { label: "Mrs", name: "mrs" },
+                          ]}
+                        />
+                      </Col>
+                      <Col xs={5}>
+                        <TextFieldComponent
+                          errorMessage={_.get(errors, "firstName.message", "")}
+                          register={register}
+                          type={type}
+                          placeholder="First Name"
+                          name="firstName"
+                          label="First Name"
+                        />
+                      </Col>
+                      <Col xs={5}>
+                        <TextFieldComponent
+                          errorMessage={_.get(errors, "lastName.message", "")}
+                          register={register}
+                          type={type}
+                          placeholder="Last Name"
+                          name="lastName"
+                          label="Last Name"
+                        />
+                      </Col>
+                    </Row>
+                  ) : eachField.type === "select" ? (
+                    <SelectComponent
+                      label={eachField.label}
+                      name={eachField.name}
+                      options={eachField.options}
+                      register={register}
+                    />
+                  ) : eachField.type === "image" ? (
+                    <ImageUpload getFile={getFile}>
+                      <div className="rounded-md shadow-lg" style={{ width: "100%", backgroundColor: "#c5c6c7" }}>
+                        <div className="items-center p-4 m-4 text-center border-4 border-dotted w-96 h-96">
+                          <p className="self-auto">Drag and drop (Or click to drop) a image file</p>
+                        </div>
+                      </div>
+                      <input
+                        name="image"
+                        type="text"
+                        value={file ? file : ""}
+                        className="d-none"
+                        {...register("image")}
+                      />
+                    </ImageUpload>
                   ) : eachField.type === "radio" ? (
                     <RadioComponent
-                      errorMessage={_.get(
-                        errors[eachField.name],
-                        "message",
-                        ""
-                      )}
+                      errorMessage={_.get(errors[eachField.name], "message", "")}
                       register={register}
                       name={name}
                       label={label}
                     />
                   ) : eachField.type === "date" ? (
                     <DatePickerComponent
-                      errorMessage={_.get(
-                        errors[eachField.name],
-                        "message",
-                        ""
-                      )}
+                      errorMessage={_.get(errors[eachField.name], "message", "")}
                       register={register}
                       name={name}
                       label={label}
                     />
                   ) : eachField.type === "textArea" ? (
                     <TextAreaComponent
-                      errorMessage={_.get(
-                        errors[eachField.name],
-                        "message",
-                        ""
-                      )}
+                      errorMessage={_.get(errors[eachField.name], "message", "")}
                       register={register}
                       placeholder={placeholder}
                       name={name}
                       label={label}
                     />
-                  ) : eachField.type === "select" ? (
-                    <PrefixNameComponent label={label} name={name} />
                   ) : eachField.name === "weight" ? (
                     <Row>
                       <Col>
@@ -196,11 +311,7 @@ function PatientRecordEntry() {
                     </Row>
                   ) : (
                     <TextFieldComponent
-                      errorMessage={_.get(
-                        errors[eachField.name],
-                        "message",
-                        ""
-                      )}
+                      errorMessage={_.get(errors[eachField.name], "message", "")}
                       register={register}
                       type={type}
                       placeholder={placeholder}
@@ -211,63 +322,48 @@ function PatientRecordEntry() {
                 </>
               );
             })}
-            <hr className="hr__tag mt-5 mb-4"/>
-            <div className="Emergency_contact_Form_Detail_container">
-              <div className="row ">
-                <h2 className="text-white mb-3">Emergency Contact Details </h2>
-                <div className="col-lg-6">
-                  <Form>
-                    <Form.Group
-                      className="mb-3"
-                      controlId="exampleForm.ControlInput1"
-                    >
-                      <Form.Label className="text-white">First Name</Form.Label>
-                      <Form.Control type="text" placeholder="First Name" />
-                    </Form.Group>
-                  </Form>
-                </div>
-                <div className="col-lg-6">
-                  <Form>
-                    <Form.Group
-                      className="mb-3"
-                      controlId="exampleForm.ControlInput1"
-                    >
-                      <Form.Label className="text-white">Last Name</Form.Label>
-                      <Form.Control type="text" placeholder="Last Name" />
-                    </Form.Group>
-                  </Form>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12">
-                  <Form.Label className="text-white">Relationship</Form.Label>
-                  <Form.Control type="text" placeholder="Relationship" />
-                </div>
-                <div className="col-12 mt-3 ">
-                  <Form.Label className="text-white">Contact Number</Form.Label>
-                  <Form.Control type="phone" placeholder="Phone" />
-                </div>
-              </div>
-            </div>
-            <hr className="hr__tag  mt-5 mb-4"/>
-            <div className="security__questions__container">
-            {_.map(questionField,
-             (each) => {
-              const { type, label, placeholder, name } = each;
-              return(
+            <hr className="hr__tag mt-5 mb-4" />
+            <Row>
+              <h2 className="text-white mb-3">Emergency Contact Details </h2>
+            </Row>
+            {_.map(emergencyFields, (eachField) => {
+              const { type, label, placeholder, name } = eachField;
+              return (
                 <>
-                {each.name === "securityQuestion" ? <SecurityQuestionComponent label={label}/>:null}
+                  {eachField.type === "text" ? (
+                    <TextFieldComponent
+                      errorMessage={_.get(errors[name], "message", "")}
+                      label={label}
+                      name={name}
+                      placeholder={placeholder}
+                      register={register}
+                      type={type}
+                    />
+                  ) : null}
                 </>
-              )
-
+              );
             })}
-
-            </div>
-            <Button
-              className="w-100 mb-4 primary__btn"
-              variant="primary"
-              type="submit"
-            >
+            <hr className="hr__tag  mt-5 mb-4" />
+            {_.map(questionFields, (eachField) => {
+              const { type, label, placeholder, name } = eachField;
+              return (
+                <>
+                  {eachField.type === "text" ? (
+                    <TextFieldComponent
+                      errorMessage={_.get(errors[name], "message", "")}
+                      label={label}
+                      name={name}
+                      placeholder={placeholder}
+                      register={register}
+                      type={type}
+                    />
+                  ) : eachField.type === "select" ? (
+                    <SelectComponent label={label} name={name} options={eachField.options} register={register} />
+                  ) : null}
+                </>
+              );
+            })}
+            <Button className="w-100 mb-4 mt-2 primary__btn" variant="primary" type="submit">
               Submit
             </Button>
           </form>

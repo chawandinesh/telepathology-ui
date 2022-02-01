@@ -2,6 +2,12 @@ import React from 'react';
 import {Form} from "react-bootstrap";
 
 const SecurityQuestionComponent = ({label}) => {
+  const data = [
+    {label:"What is your date of birth?",name:"what is your date of birth?"},
+    {label: "Which is your favourite car?",name:"which is your favourite car?"},
+    {label:"What is your native place?", name:"what is your native place?"},
+    {label: "what is your favourite color?",name: "what is your favourite color?"}
+  ];
   return <div className='mb-5'>
        <Form.Label className="text-white">Security Question</Form.Label>
         <Form.Select aria-label="Default select example">

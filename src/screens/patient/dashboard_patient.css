@@ -1,0 +1,138 @@
+/* @black: #0B0C10;
+@lightblack: #1f2833;
+@blacklgt: #0B0C10;
+@lightgray: #c5c6c7;
+@skyblue: #66fcf1;
+@darkskyblue: #45a29e; */
+
+.patient__dashboard {
+    height: 100vh;
+    width: 100vw;
+    background-color: #1f2833;
+    overflow: auto;
+}
+
+.patient__dashboard__sidebar {
+    height: 100%;
+    width: 20%;
+    min-width: 200px;
+    background-color: #66fcf1;
+    border-top-right-radius: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.patient__dashboard__sidebar .top {
+    height: 15%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profile__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.patient__dashboard__sidebar .top .profile__image__container {
+    border-radius: 50%;
+    border-width: 1px;
+    height: 60px;
+    width: 60px;
+    border-width: 3;
+    border-color: #000;
+    background-color: black;
+}
+
+.patient__dashboard__sidebar .top .profile__name {
+    padding-left: 20px;
+}
+.patient__dashboard__sidebar .top .profile__name > h5{
+    padding: 0;
+    color:#000
+}
+.patient__dashboard__sidebar .top .profile__name > h5{
+    padding: 0;
+    color:#1f2833
+}
+
+
+.patient__dashboard__sidebar .middle {
+    height: 60%;
+    width: 100%;
+}
+.patient__dashboard__sidebar .bottom {
+    height: 10%;
+    width: 100%;
+}
+.telepathology__container {
+    text-align: center;
+    padding: 20px 10px 0px 0px;
+}
+.telepathology__container > h3 {
+    font-weight: bold;
+    font-size: 18px;
+}
+.middle .list__container {
+    display: flex;
+    justify-content: column;
+    justify-content: center;
+    margin-top: 20px;
+}
+.middle .list__container > ul {
+    padding: 0;
+    width: 100%;
+}
+.middle .list__container > ul > li .selected {
+    list-style: none;
+    width: 100%;
+    margin-top: 10px;
+    background-color: #1f2833;
+    color:#66fcf1;
+    font-size: 16px;
+}
+
+.middle .list__container > ul > li  {
+    list-style: none;
+    width: 100%;
+    margin-top: 10px;
+    color:#1f2833;
+    font-size: 16px;
+}
+
+.list__name__container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    padding-left: 20px;
+}
+.list__name__container.selected:hover{
+ cursor: pointer;
+ opacity: 1;
+}
+.list__name__container:hover {
+   opacity: 0.7;
+   cursor: pointer;
+}
+
+.list__name__container .list__icon {
+    margin-right: 5px;
+}
+
+.info__container {
+    color: #f40000;
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    cursor: pointer
+}
+
+.info__container:hover {
+    padding: 10px 20px;
+    background-color: rgba(0,0,0,0.9);
+}
+
+.info__container .logout__name {
+    padding-left: 10px;
+}
