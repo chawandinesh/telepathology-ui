@@ -1,23 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import TextFieldComponent from "../components/TextFieldComponent";
+import TextFieldComponent from "../../components/TextFieldComponent";
 import "./patientrecordentry.css";
-import RadioComponent from "../components/RadioComponent";
-import DatePickerComponent from "../components/DatePickerComponent";
+import RadioComponent from "../../components/RadioComponent";
+import DatePickerComponent from "../../components/DatePickerComponent";
 import { Button, Col, Row } from "react-bootstrap";
-import TextAreaComponent from "../components/TextAreaComponent";
+import TextAreaComponent from "../../components/TextAreaComponent";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import ImageComponent from "../components/ImageComponent";
-import SelectComponent from "../components/SelectComponent";
-import { Form } from "react-bootstrap";
-import SecurityQuestionComponent from "../components/SecurityQuestionComponent";
-import logo from "../assets/images/medical.png";
-import logo1 from "../assets/images/recovered.png";
-import ImageUpload from "../components/ImageUpload";
+import SelectComponent from "../../components/SelectComponent";
+import logo1 from "../../assets/images/recovered.png";
+import ImageUpload from "../../components/ImageUpload";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 function PatientRecordEntry() {
   const [file, setFile] = useState(null);
   const patientRegisterSchema = yup.object().shape({
@@ -366,6 +364,14 @@ function PatientRecordEntry() {
             <Button className="w-100 mb-4 mt-2 primary__btn" variant="primary" type="submit">
               Submit
             </Button>
+            {/* <Button className="w-100 mb-4 mt-2" variant="primary"> */}
+            <div className="text-center text-white pb-3 pt-3">
+              <Link to="/patient/dashboard" className="text-white" >
+                Go to dashboard
+                </Link>
+
+            </div>
+            {/* </Button> */}
           </form>
         </div>
       </div>

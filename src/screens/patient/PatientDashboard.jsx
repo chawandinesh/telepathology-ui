@@ -6,7 +6,7 @@ import { FaWpforms, FaLaptopMedical, FaSignOutAlt} from "react-icons/fa";
 import { BsFileSpreadsheet } from "react-icons/bs";
 import alexImg from "../../assets/images/alex.jpeg";
 
-const PatientDashboard = () => {
+const PatientDashboard = ({navigation}) => {
   const [selectedName, setSelectedName] = useState("Dashboard");
 
   const SideBarMenuItems = () => (
