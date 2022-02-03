@@ -5,7 +5,7 @@ import TextFieldComponent from "../../../components/TextFieldComponent";
 import "./patientrecordentry.css";
 import RadioComponent from "../../../components/RadioComponent";
 import DatePickerComponent from "../../../components/DatePickerComponent";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Row, Spinner, Toast, ToastContainer } from "react-bootstrap";
 import TextAreaComponent from "../../../components/TextAreaComponent";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,8 +18,11 @@ import { useNavigate } from "react-router-dom";
 import { patientRegister } from "../../../helpers/helpers";
 
 function PatientRecordEntry() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const [error, setError] = useState(false);
   const [file, setFile] = useState(null);
+  const [registerLoading, setRegisterLoading] = useState(false);
   const patientRegisterSchema = yup.object().shape({
     firstName: yup.string().required("First name is required"),
     lastName: yup.string().required("Last name is required"),
@@ -40,7 +43,10 @@ function PatientRecordEntry() {
     emergencyLastName: yup.string().required("Emergency Last Name is Required"),
     emergencyRelationship: yup.string().required("Emergency Relationship is Required"),
     emergencyPhone: yup.string().required("Emergency Phone is Required"),
-    password: yup.string().required("Password is required").min(8, "Password is too short - should be 8 chars minimum."),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Password is too short - should be 8 chars minimum."),
     confirmpassword: yup
       .string()
       .required("Confirm Password is required")
@@ -109,7 +115,7 @@ function PatientRecordEntry() {
       type: "password",
       placeholder: "Confirm Password",
     },
-    { name: "image", label: "Image", type: "image" },
+    { name: "image", label: "Profile Image", type: "image" },
   ];
 
   const emergencyFields = [
@@ -168,32 +174,33 @@ function PatientRecordEntry() {
   };
   const formData = new FormData();
 
-  const postApi = async () => {
-    await axios({
-      method: "POST",
-      url: `https://doctor-patient-project.herokuapp.com/api/patient/addPatient`,
-      data: formData,
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const onSubmit = (e) => {
+    setRegisterLoading(true);
+    setShow(false);
+    setError(false);
     if (file) {
       formData.append("image", file);
     }
     formData.append("data", JSON.stringify(e));
 
-    patientRegister(formData).then(res => {
-      console.log(res,'res');
-      alert("success")
-    }).catch(err => {
-      console.log(err);
-    })
+    patientRegister(formData)
+      .then((res) => {
+        setShow(true);
+        setError(false);
+        setRegisterLoading(false);
+        console.log(res, "res");
+        reset();
+        setTimeout(() => {
+          navigate("/patient/login");
+        }, 3000);
+        setFile(null);
+        // alert("success");
+      })
+      .catch((err) => {
+        setError(true);
+        setRegisterLoading(false);
+        console.log(err);
+      });
   };
 
   return (
@@ -370,24 +377,43 @@ function PatientRecordEntry() {
               );
             })}
             <Button className="w-100 mb-4 mt-2 primary__btn" variant="primary" type="submit">
-              Submit
+              {registerLoading ? <Spinner animation="border" /> : "Register"}
             </Button>
             <div className="w-100 justify-content-center d-flex align-items-center text-white mb-4 text-center mt-2">
-              Already registered ? <Button style={{color:"#66fcf1"}}  variant="link" onClick={() => {
-                navigate("/patient/login")
-              }}>Login</Button>
+              Already registered ?{" "}
+              <Button
+                style={{ color: "#66fcf1" }}
+                variant="link"
+                onClick={() => {
+                  navigate("/patient/login");
+                }}
+              >
+                Login
+              </Button>
             </div>
-            {/* <Button className="w-100 mb-4 mt-2" variant="primary"> */}
-            {/* <div className="text-center text-white pb-3 pt-3">
-              <Link to="/patient/dashboard" className="text-white" >
-                Go to dashboard
-                </Link>
-
-            </div> */}
-            {/* </Button> */}
           </form>
         </div>
       </div>
+      <ToastContainer position="top-end" className="p-3">
+        <Toast onClose={() => setShow(false)} bg="success" show={show} delay={3000} autohide>
+          <Toast.Header>
+            <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+            <strong className="me-auto">Success</strong>
+            <small className="text-muted">just now</small>
+          </Toast.Header>
+          <Toast.Body style={{ color: "#fff" }}>Successfully Registerred</Toast.Body>
+        </Toast>
+      </ToastContainer>
+      <ToastContainer position="top-end" className="p-3">
+        <Toast onClose={() => setError(false)} bg="danger" show={error} delay={3000} autohide>
+          <Toast.Header>
+            <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
+            <strong className="me-auto">Failed</strong>
+            <small className="text-muted">just now</small>
+          </Toast.Header>
+          <Toast.Body style={{ color: "#fff" }}>Failed to register</Toast.Body>
+        </Toast>
+      </ToastContainer>
     </div>
   );
 }
