@@ -14,7 +14,7 @@ import SelectComponent from "../../../components/SelectComponent";
 import logo1 from "../../../assets/images/recovered.png";
 import ImageUpload from "../../../components/ImageUpload";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { patientRegister } from "../../../helpers/helpers";
 
 function PatientRecordEntry() {
@@ -40,10 +40,11 @@ function PatientRecordEntry() {
     emergencyLastName: yup.string().required("Emergency Last Name is Required"),
     emergencyRelationship: yup.string().required("Emergency Relationship is Required"),
     emergencyPhone: yup.string().required("Emergency Phone is Required"),
-    password: yup.string().required("Password is required"),
+    password: yup.string().required("Password is required").min(8, "Password is too short - should be 8 chars minimum."),
     confirmpassword: yup
       .string()
       .required("Confirm Password is required")
+      .min(8, "Password is too short - should be 8 chars minimum.")
       .oneOf([yup.ref("password"), null], "Passwords must match"),
     securityAnswer: yup.string().required("Security answer requred"),
   });
@@ -201,7 +202,7 @@ function PatientRecordEntry() {
         <div className="add__record__container mb-5">
           <span className="add__record__text">New Patient Enrollment</span>
           <span>
-            <img src={logo1} className="patient_logo"></img>
+            <img src={logo1} className="patient_logo" alt="patient_logo"></img>
           </span>
         </div>
         <div className="patient__form__container">
