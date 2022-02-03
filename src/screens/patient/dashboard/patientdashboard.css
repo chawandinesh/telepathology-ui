@@ -1,13 +1,14 @@
 /* @black: #0B0C10;
 @lightblack: #1f2833;
 @blacklgt: #0B0C10;
-@lightgray: #c5c6c7;
+@lightgray: #upload__pathology__header;
 @skyblue: #66fcf1;
 @darkskyblue: #45a29e; */
 
 .patient__dashboard {
     height: 100vh;
     width: 100vw;
+    display: flex;
     background-color: #1f2833;
     overflow: auto;
 }
@@ -44,8 +45,28 @@
     border-width: 3;
     border-color: #000;
     background-color: black;
+    position: relative;
+}
+.faediticon__container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #000;
+    border-radius: 50%;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-color: black;
+    border-width: 1px;
+    cursor: pointer
 }
 
+.faediticon {
+    font-size: 12px;
+    padding-left: 1px;
+    color: #fff;
+}
 .patient__dashboard__sidebar .top .profile__name {
     padding-left: 20px;
 }

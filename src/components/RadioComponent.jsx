@@ -5,7 +5,7 @@ function RadioComponent({ name, label, register, errorMessage }) {
   return (
     <Form.Group className="mb-3 text__field" controlId="formBasicEmail">
       <Form.Label className="text-white">{label}</Form.Label>
-      <div className="mb-3 d-flex">
+      <div className="mb-3 d-flex justify-content-start">
         <div class="form-check w-25">
           <input {...register("gender")} value="male" name="gender" class="form-check-input" type="radio" id="male" />
           <label class="form-check-label text-white pl-1 pr-2" for="male">

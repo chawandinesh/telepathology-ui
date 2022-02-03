@@ -1,0 +1,17 @@
+.dashboard__main__container {
+    height: 100%;
+    width: 80vw;
+}
+
+.dashboard__main__header {
+    height: 120px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.dashboard__main__header > h3 {
+    color: #c5c6c7;
+    padding-right: 20px;
+}

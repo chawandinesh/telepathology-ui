@@ -8,7 +8,7 @@ const PrefixNameComponent = ({ register, label, options, name }) => {
         <Form.Label className="text-white mr-2">{label}</Form.Label>
         <Form.Control {...register(name)} as="select" aria-label={name} name={name}>
           {_.map(options, (eachOption) => (
-            <option value={eachOption.value}>{eachOption.label}</option>
+            <option value={eachOption.name}>{eachOption.label}</option>
           ))}
         </Form.Control>
       </Form.Group>

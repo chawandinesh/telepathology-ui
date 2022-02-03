@@ -1,22 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import TextFieldComponent from "../../components/TextFieldComponent";
+import TextFieldComponent from "../../../components/TextFieldComponent";
 import "./patientrecordentry.css";
-import RadioComponent from "../../components/RadioComponent";
-import DatePickerComponent from "../../components/DatePickerComponent";
+import RadioComponent from "../../../components/RadioComponent";
+import DatePickerComponent from "../../../components/DatePickerComponent";
 import { Button, Col, Row } from "react-bootstrap";
-import TextAreaComponent from "../../components/TextAreaComponent";
+import TextAreaComponent from "../../../components/TextAreaComponent";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import SelectComponent from "../../components/SelectComponent";
-import logo1 from "../../assets/images/recovered.png";
-import ImageUpload from "../../components/ImageUpload";
+import SelectComponent from "../../../components/SelectComponent";
+import logo1 from "../../../assets/images/recovered.png";
+import ImageUpload from "../../../components/ImageUpload";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { patientRegister } from "../../../helpers/helpers";
 
 function PatientRecordEntry() {
+  const navigate = useNavigate()
   const [file, setFile] = useState(null);
   const patientRegisterSchema = yup.object().shape({
     firstName: yup.string().required("First name is required"),
@@ -185,7 +187,12 @@ function PatientRecordEntry() {
     }
     formData.append("data", JSON.stringify(e));
 
-    postApi();
+    patientRegister(formData).then(res => {
+      console.log(res,'res');
+      alert("success")
+    }).catch(err => {
+      console.log(err);
+    })
   };
 
   return (
@@ -364,13 +371,18 @@ function PatientRecordEntry() {
             <Button className="w-100 mb-4 mt-2 primary__btn" variant="primary" type="submit">
               Submit
             </Button>
+            <div className="w-100 justify-content-center d-flex align-items-center text-white mb-4 text-center mt-2">
+              Already registered ? <Button style={{color:"#66fcf1"}}  variant="link" onClick={() => {
+                navigate("/patient/login")
+              }}>Login</Button>
+            </div>
             {/* <Button className="w-100 mb-4 mt-2" variant="primary"> */}
-            <div className="text-center text-white pb-3 pt-3">
+            {/* <div className="text-center text-white pb-3 pt-3">
               <Link to="/patient/dashboard" className="text-white" >
                 Go to dashboard
                 </Link>
 
-            </div>
+            </div> */}
             {/* </Button> */}
           </form>
         </div>
