@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import "./patientdashboard.css";
 import { MdOutlineSpaceDashboard, MdOutlineRecommend, MdOutlineAppRegistration } from "react-icons/md";
@@ -7,7 +7,7 @@ import { BsFileSpreadsheet } from "react-icons/bs";
 import alexImg from "../../../assets/images/alex.jpeg";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
-import { addReportFile, api_url, getUserData, image_url, updatePatient } from "../../../helpers/helpers";
+import { addReportFile, api_url, getUser, image_url, updatePatient } from "../../../helpers/helpers";
 import { Toast, ToastContainer } from "react-bootstrap";
 
 const profileImageRef = React.createRef();
@@ -15,19 +15,30 @@ const PatientDashboard = ({ navigation, children }) => {
   // const [pathologySample, setPathologySample] = useState(second);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedName, setSelectedName] = useState("Dashboard");
-  const userData = getUserData();
+
+  const getUserData = () => {
+    getUser().then(res => {
+      setUser(res);
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
+
   const getProifleImage = () => {
-    if (userData?.image) {
-      return `${image_url}/${userData.image}`;
+    if (user?.image) {
+      return `${image_url}/${user.image}`;
     } else {
       return "https://w7.pngwing.com/pngs/340/956/png-transparent-profile-user-icon-computer-icons-user-profile-head-ico-miscellaneous-black-desktop-wallpaper.png";
     }
   };
-  console.log(userData, "user");
+
+ 
   const SideBarMenuItems = () => (
     <div className="middle">
       <div className="list__container">
@@ -94,8 +105,8 @@ const PatientDashboard = ({ navigation, children }) => {
   const ProfileImage = new FormData();
 
   const handleImageUpload = (e) => {
-    ProfileImage.append("image", e.target.files[0]);
-    ProfileImage.append("data", JSON.stringify({ _id: _.get(getUserData(), "_id"), oldimage: "" }));
+    // ProfileImage.append("image", e.target.files[0]);
+    // ProfileImage.append("data", JSON.stringify({ _id: _.get(getUserData(), "_id"), oldimage: "" }));
     updatePatient(ProfileImage)
       .then((res) => {
         console.log(res, "res...");
@@ -104,6 +115,11 @@ const PatientDashboard = ({ navigation, children }) => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+     getUserData()
+  }, []);
+  
 
   return (
     <div className="patient__dashboard">
@@ -127,8 +143,8 @@ const PatientDashboard = ({ navigation, children }) => {
               </div> */}
             </div>
             <div className="profile__name">
-              <h5>{`${_.get(userData, "firstName")} ${_.get(userData, "lastName")}`}</h5>
-              <span>{_.get(userData, "ABHAHealthId", "")}</span>
+              <h5>{`${_.get(user, "firstName")} ${_.get(user, "lastName")}`}</h5>
+              <span>{_.get(user, "ABHAHealthId", "")}</span>
             </div>
           </div>
         </div>

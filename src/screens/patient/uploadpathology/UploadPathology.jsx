@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import ImageUpload from "../../../components/ImageUpload";
-import { addReportFile, getUserData } from "../../../helpers/helpers";
+import { addReportFile, getUser, image_url } from "../../../helpers/helpers";
 import "./uploadpathology.css";
 import { Toast, ToastContainer } from "react-bootstrap";
 
 const UploadPathology = () => {
-  const userData = getUserData();
+  const [user,setUser] = useState(null)
   const [file, setFile] = useState(null);
   const ReportFile = new FormData();
   const [success, setSuccess] = useState(false);
@@ -15,32 +15,52 @@ const UploadPathology = () => {
   //   console.log(localStorage.getItem(_.get(getUserData(), "_id")));
   //   return _.size(localStorage.getItem(_.get(getUserData(), "_id")));
   // };
+  const getUserData = (id) => {
+    getUser(id).then(res => {
+      console.log(res,'res...');
+      setUser(_.get(res,'data.data',''));
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
+  useEffect(() => {
+    getUserData(_.get(JSON.parse(localStorage.getItem("user")),"_id",""))
+
+  }, []);
+  
   const getReportImage = () => {
-    return   window.localStorage.getItem(`${_.get(getUserData(),"_id")}u`)
+    const url = _.get(user,"reportFile","") ? `${image_url}/${_.get(user,"reportFile","")}` : undefined;
+    console.log(url);
+    return url
+    // return   window.localStorage.getItem(`${_.get(getUserData(),"_id")}u`)
   }
   const getFile = (file) => {
+    console.log(file,'file..')
     setError(false);
     setSuccess(false);
     setFile(file);
     ReportFile.append("reportFile", file);
-    ReportFile.append("data", JSON.stringify({ _id: _.get(getUserData(), "_id"), oldImage: "" }));
+    ReportFile.append("data", JSON.stringify({ _id: _.get(user, "_id"), oldImage: "" }));
     addReportFile(ReportFile)
       .then((res) => {
+        console.log(res,'res..');
         setSuccess(true);
-        window.localStorage.setItem(`${_.get(getUserData(),"_id")}u`, file ? URL.createObjectURL(file) : undefined)
+        getUserData(_.get(JSON.parse(localStorage.getItem("user")),"_id",""))
+        window.localStorage.setItem(`${_.get(user,"_id")}u`, file ? URL.createObjectURL(file) : undefined)
       })
       .catch((err) => {
         setError(true);
       });
   };
+  console.log(user)
 
   console.log(getReportImage())
   // const getFile = (file) => {
   //   setFile(file);
   // };
 
-  const url = file ? URL.createObjectURL(file) : undefined;
-  console.log(url);
+
   return (
     <div className="upload__pathology__container">
       <div className="upload__pathology__header">

@@ -43,3 +43,10 @@ export const updatePatient = async(data) => {
         data: data
     }).then(res => res)
 }
+
+export const getUser = async(id) => {
+    return axios({
+        method: "GET",
+        url: `${api_url}/patient/getPatientById/${id}`,
+    }).then(res => res)
+}
