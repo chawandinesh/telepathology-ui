@@ -4,26 +4,29 @@ import "./patientdashboard.css";
 import { MdOutlineSpaceDashboard, MdOutlineRecommend, MdOutlineAppRegistration } from "react-icons/md";
 import { FaWpforms, FaLaptopMedical, FaSignOutAlt } from "react-icons/fa";
 import { BsFileSpreadsheet } from "react-icons/bs";
-import alexImg from "../../../assets/images/alex.jpeg";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
-import { addReportFile, api_url, getUser, image_url, updatePatient } from "../../../helpers/helpers";
-import { Toast, ToastContainer } from "react-bootstrap";
+import {  getUserById, baseUrl, updatePatient } from "../../../helpers/helpers";
+import ToastComponent from "../../../components/ToastComponent";
 
 const profileImageRef = React.createRef();
 const PatientDashboard = ({ navigation, children }) => {
   // const [pathologySample, setPathologySample] = useState(second);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
+  
+  const [state, setState] = useState({
+    show: false,
+    message:"",
+    type: "success"
+  });
   const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const [selectedName, setSelectedName] = useState("Dashboard");
 
   const getUserData = () => {
-    getUser().then(res => {
-      setUser(res);
+    const userId = JSON.parse(localStorage.getItem("user"))
+    getUserById(_.get(userId,"_id")).then(res => {
+      setUser(_.get(res,"data.data",""));
     }).catch((err) => {
       console.log(err);
     })
@@ -32,7 +35,7 @@ const PatientDashboard = ({ navigation, children }) => {
 
   const getProifleImage = () => {
     if (user?.image) {
-      return `${image_url}/${user.image}`;
+      return `${baseUrl}/${user.image}`;
     } else {
       return "https://w7.pngwing.com/pngs/340/956/png-transparent-profile-user-icon-computer-icons-user-profile-head-ico-miscellaneous-black-desktop-wallpaper.png";
     }
@@ -47,10 +50,16 @@ const PatientDashboard = ({ navigation, children }) => {
             [
               { name: "Dashboard", selected: false, icon: <MdOutlineSpaceDashboard />, path: "/patient/dashboard" },
               {
-                name: "Upload pathology sample",
+                name: "Pathology Samples",
                 selected: true,
                 icon: <FaWpforms />,
-                path: "/patient/dashboard/upload-pathology-sample",
+                path: "/patient/dashboard/pathology-sample",
+              },
+              {
+                name: "Diagnosis and Comments",
+                selected: true,
+                icon: <FaWpforms />,
+                path: "/patient/dashboard/diagnosiscomments",
               },
               {
                 name: "View results and report",
@@ -78,7 +87,6 @@ const PatientDashboard = ({ navigation, children }) => {
                 <div
                   className={`list__name__container ${location.pathname === each.path ? "selected" : ""}`}
                   onClick={() => {
-                    setSelectedName(each.name);
                     if (each.path) {
                       navigate(each.path);
                     }
@@ -105,11 +113,18 @@ const PatientDashboard = ({ navigation, children }) => {
   const ProfileImage = new FormData();
 
   const handleImageUpload = (e) => {
-    // ProfileImage.append("image", e.target.files[0]);
-    // ProfileImage.append("data", JSON.stringify({ _id: _.get(getUserData(), "_id"), oldimage: "" }));
+    ProfileImage.append("image", e.target.files[0]);
+    ProfileImage.append("data", JSON.stringify({ _id: _.get(user, "_id"), oldimage: _.get(user,"image") }));
     updatePatient(ProfileImage)
       .then((res) => {
         console.log(res, "res...");
+        setState({
+          ...state,
+          show: true,
+          message:"Successfully updated",
+          type: "success"
+        })
+        getUserData()
       })
       .catch((err) => {
         console.log(err);
@@ -138,12 +153,12 @@ const PatientDashboard = ({ navigation, children }) => {
                 width="100%"
                 style={{ borderRadius: "50%", objectFit: "cover" }}
               />
-              {/* <div className="faediticon__container" onClick={() => profileImageRef.current.click()}>
+              <div className="faediticon__container" onClick={() => profileImageRef.current.click()}>
                 <FaEdit className="faediticon" />
-              </div> */}
+              </div>
             </div>
             <div className="profile__name">
-              <h5>{`${_.get(user, "firstName")} ${_.get(user, "lastName")}`}</h5>
+              <h5>{`${_.get(user, "firstName","")} ${_.get(user, "lastName","")}`}</h5>
               <span>{_.get(user, "ABHAHealthId", "")}</span>
             </div>
           </div>
@@ -162,7 +177,7 @@ const PatientDashboard = ({ navigation, children }) => {
         </div>
       </div>
       <div className="patient__dashboard__main">{children}</div>
-      <ToastContainer position="top-end" className="p-3">
+      {/* <ToastContainer position="top-end" className="p-3">
         <Toast onClose={() => setSuccess(false)} bg="success" show={success} delay={3000} autohide>
           <Toast.Header>
             <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
@@ -181,7 +196,8 @@ const PatientDashboard = ({ navigation, children }) => {
           </Toast.Header>
           <Toast.Body style={{ color: "#fff" }}>Failed to upload</Toast.Body>
         </Toast>
-      </ToastContainer>
+      </ToastContainer> */}
+      <ToastComponent state={state} setState={setState}/>
       <input type="file" accept="image/*" className="d-none" onChange={handleImageUpload} ref={profileImageRef} />
     </div>
   );

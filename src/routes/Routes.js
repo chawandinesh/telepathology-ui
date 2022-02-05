@@ -5,8 +5,10 @@ import LandingPage from "../screens/LandingPage";
 import PathologistRecordEntry from "../screens/pathologist/PathologistRecordEntry";
 import PatientDashboard from "../screens/patient/dashboard/PatientDashboard";
 import PatientDashboardMain from "../screens/patient/dashboard/PatientDashboardMain";
+import DiagnosisAndComments from "../screens/patient/diagnosisandcomments/DiagnosisAndComments";
 import Login from "../screens/patient/login/Login";
 import PatientRecordEntry from "../screens/patient/registration/PatientRecordEntry";
+import PathologySamples from "../screens/patient/uploadpathology/PathologySamples";
 import UploadPathology from "../screens/patient/uploadpathology/UploadPathology";
 
 const AppRoutes = () => {
@@ -22,13 +24,22 @@ const AppRoutes = () => {
     <Router>
       <Routes>
         <Route
-          path="/patient/dashboard/upload-pathology-sample"
+          path="/patient/dashboard/pathology-sample"
           element={
             <PatientRoute>
-              <UploadPathology />
+              <PathologySamples />
             </PatientRoute>
           }
         />
+        <Route
+          path="/patient/dashboard/diagnosiscomments"
+          element={
+            <PatientRoute>
+              <DiagnosisAndComments />
+            </PatientRoute>
+          }
+        />
+
         <Route
           path="/patient/dashboard"
           element={

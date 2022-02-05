@@ -263,7 +263,7 @@ function PatientRecordEntry() {
                       register={register}
                     />
                   ) : eachField.type === "image" ? (
-                    <ImageUpload getFile={getFile}>
+                    <ImageUpload file={file} setFile={setFile} hidelabel={false} >
                       <div className="rounded-md shadow-lg" style={{ width: "100%", backgroundColor: "#c5c6c7" }}>
                         <div className="items-center p-4 m-4 text-center border-4 border-dotted w-96 h-96">
                           <p className="self-auto">Drag and drop (Or click to drop) a image file</p>

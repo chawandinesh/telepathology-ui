@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export const api_url = "https://doctor-patient-project.herokuapp.com/api"
-export const image_url = "https://doctor-patient-project.herokuapp.com"
+export const baseUrl = "https://doctor-patient-project.herokuapp.com"
 export const isLoginSuccess = () => {
     const token = window.localStorage.getItem("token")
     return Boolean(token)
@@ -38,13 +38,13 @@ export const addReportFile = async(data) => {
 
 export const updatePatient = async(data) => {
     return axios({
-        method:"POST",
+        method:"PUT",
         url:`${api_url}/patient/updatePatient`,
         data: data
     }).then(res => res)
 }
 
-export const getUser = async(id) => {
+export const getUserById = async(id) => {
     return axios({
         method: "GET",
         url: `${api_url}/patient/getPatientById/${id}`,

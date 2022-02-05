@@ -5,18 +5,14 @@ import { FileUploader } from "react-drag-drop-files";
 
 const fileTypes = ["JPEG", "PNG"];
 
-export default function ImageUpload({children, getFile, hidelabel}) {
-  const [file, setFile] = useState(null);
-  const handleChange = (file) => {
-    setFile(file);
-    getFile(file)
-  };
-
+export default function ImageUpload({ file, setFile, fileName, hidelabel, children }) {
   return (
     <Form.Group className="mb-3 text__field image__file" controlId="formBasicEmail">
-     {hidelabel ? <div></div> :<div className="text-white">Image</div>}
-      <FileUploader children={children} handleChange={handleChange} name="file" types={fileTypes} />
-      {/* <p style={{color: "#66fcf1"}}>{file ? `File name: ${file.name}` : "no files uploaded yet"}</p> */}
+      {hidelabel ? <div></div> : <div className="text-white">Image</div>}
+      <FileUploader children={children} handleChange={(e) => setFile(e)} name="file" types={fileTypes} />
+      <p style={{ color: file ? "#66fcf1" :"red" }}>
+        {file ? `File name: ${file.name}` : fileName ? `File name: ${fileName}` : "no files uploaded yet"}
+      </p>
     </Form.Group>
   );
 }
