@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
-import "./patientdashboard.css";
+import "./pathologistdashboard.css";
 import { MdOutlineSpaceDashboard, MdOutlineRecommend, MdOutlineAppRegistration } from "react-icons/md";
 import { FaWpforms, FaLaptopMedical, FaSignOutAlt } from "react-icons/fa";
 import { BsFileSpreadsheet } from "react-icons/bs";
@@ -10,7 +10,7 @@ import {  getUserById, baseUrl, updatePatient } from "../../../helpers/helpers";
 import ToastComponent from "../../../components/ToastComponent";
 
 const profileImageRef = React.createRef();
-const PatientDashboard = ({ navigation, children }) => {
+const PathologistDashboard = ({ navigation, children }) => {
   // const [pathologySample, setPathologySample] = useState(second);
   
   const [state, setState] = useState({
@@ -204,4 +204,4 @@ const PatientDashboard = ({ navigation, children }) => {
   );
 };
 
-export default PatientDashboard;
+export default PathologistDashboard;

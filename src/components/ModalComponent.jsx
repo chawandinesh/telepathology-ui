@@ -17,7 +17,7 @@ const ModalComponent = ({ modalData, setModalData, children }) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleClose} style={{backgroundColor:"#3F706E",border:"1px solid #1f2833"}}>
             Save Changes
           </Button>
         </Modal.Footer>

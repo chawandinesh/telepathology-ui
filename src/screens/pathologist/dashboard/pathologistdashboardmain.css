@@ -1,0 +1,29 @@
+.dashboard__main__container {
+    height: 100%;
+    width: 80vw;
+}
+
+.dashboard__main__header {
+    height: 15%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.dashboard__main__header > h3 {
+    color: #c5c6c7;
+    padding-right: 20px;
+}
+
+.patient_dashboard__container {
+    height: 70%
+}
+
+.main__container {
+    height: 85%;
+    width: 100%;
+    background-color: #c5c6c7;
+    margin-left: 10px;
+    margin-right: 10px;
+}

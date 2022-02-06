@@ -2,12 +2,14 @@ import React from "react";
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import { isLoginSuccess } from "../helpers/helpers";
 import LandingPage from "../screens/LandingPage";
+import PathologistDashboardMain from "../screens/pathologist/dashboard/PathologistDashboardMain";
 import PathologistRecordEntry from "../screens/pathologist/PathologistRecordEntry";
 import PatientDashboard from "../screens/patient/dashboard/PatientDashboard";
 import PatientDashboardMain from "../screens/patient/dashboard/PatientDashboardMain";
 import DiagnosisAndComments from "../screens/patient/diagnosisandcomments/DiagnosisAndComments";
 import Login from "../screens/patient/login/Login";
 import PatientRecordEntry from "../screens/patient/registration/PatientRecordEntry";
+import ResultsReports from "../screens/patient/results-reports/ResultsReports";
 import PathologySamples from "../screens/patient/uploadpathology/PathologySamples";
 import UploadPathology from "../screens/patient/uploadpathology/UploadPathology";
 
@@ -17,6 +19,14 @@ const AppRoutes = () => {
       return <PatientDashboard>{children}</PatientDashboard>;
     } else {
       return <Navigate to={"/patient/login"} />;
+    }
+  };
+
+  const PathologistRoute = ({ children }) => {
+    if (isLoginSuccess()) {
+      return <PatientDashboard>{children}</PatientDashboard>;
+    } else {
+      return <Navigate to={"/pathologist/login"} />;
     }
   };
 
@@ -41,11 +51,28 @@ const AppRoutes = () => {
         />
 
         <Route
+            path="/patient/dashboard/results-reports"
+            element={
+              <PatientRoute>
+                <ResultsReports />
+              </PatientRoute>
+            }
+        />
+
+        <Route
           path="/patient/dashboard"
           element={
             <PatientRoute>
               <PatientDashboardMain />
             </PatientRoute>
+          }
+        />
+         <Route
+          path="/pathologist/dashboard"
+          element={
+            <PathologistRoute>
+              <PathologistDashboardMain />
+            </PathologistRoute>
           }
         />
         <Route path="/patient/registration" element={<PatientRecordEntry />} />
