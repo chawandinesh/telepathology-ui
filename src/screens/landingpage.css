@@ -1,9 +1,87 @@
-.landing__page__container{
- /* height: 100vh; */
+.landing__container {
+    height: 100vh;
+    width: 80%;
+    margin: 0 auto;
 }
-.landing__page__top{
 
+.landing__header {
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:  #66fcf1;
 }
-.landing__page__bottom {
 
+.landing__header > span {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.landing__btn__container {
+    display: flex;
+    justify-content: end;
+    padding: 10px
+}
+
+.landing__btn__container > button {
+    margin: 10px;
+    padding: 5px;
+    border-radius: 4px;
+    background-color: #66fcf1;
+    min-width: 80px;
+}
+
+.landing__hr {
+    background-color: #66fcf1;
+}
+
+.landing__dashboard__main {
+    /* width: 100%; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.landing__img {
+    height: 300px;
+    width: 40%;
+}
+
+.landing__info {
+    height: auto;
+    margin-top: 20px;
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.landing__for__patient {
+    width: 40%;
+}
+.landing__for__patient > span {
+    font-weight: bold;
+    font-size: 23px;
+    color: #fff;
+    text-align: center;
+}
+
+.landing__for__patient > p {
+    color:#66fcf1;
+    padding-top: 10px;
+}
+
+.landing__for__pathologist {
+    width: 40%;
+}
+
+.landing__for__pathologist > span {
+    font-weight: bold;
+    font-size: 23px;
+    text-align: center;
+    color: #fff;
+}
+
+.landing__for__pathologist > p {
+    color:#66fcf1;
+    padding-top: 10px;
 }

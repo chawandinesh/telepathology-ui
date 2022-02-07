@@ -79,7 +79,7 @@ const AppRoutes = () => {
         <Route path="/pathologist/registration" element={<PathologistRecordEntry />} />
         <Route path="/patient/login" element={isLoginSuccess() ? <Navigate to="/patient/dashboard" /> : <Login />} />
         <Route path="/" element={<Navigate to={isLoginSuccess() ? "/patient/dashboard" : "/patient/login"} />} />
-        {/* <Route path="/landing" element={<LandingPage />} /> */}
+        <Route path="/landing" element={<LandingPage />} />
       </Routes>
     </Router>
   );
