@@ -85,3 +85,49 @@
     color:#66fcf1;
     padding-top: 10px;
 }
+
+
+/* landingsignin */
+
+.signin__container {
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.signin__patient {
+    width: 40%;
+    height: 300px;
+    margin: 30px;
+    margin-top: 50px;
+}
+
+.signin__pathologist {
+    width: 40%;
+    margin: 30px;
+    height: 300px;
+    margin-top: 50px;
+}
+
+.signin__pathologist > p {
+    color: #66fcf1;
+
+}
+
+.signin__patient > p {
+    color: #66fcf1
+}
+
+.landing__signin__container {
+    margin-top: 30px;
+}
+
+.landing__signin {
+    background-color: #66fcf1;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+

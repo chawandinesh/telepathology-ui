@@ -1,8 +1,9 @@
 import React from "react";
 import "./landingpage.css";
-import bgImg from '../assets/images/landing-background.png'
-import abc from '../assets/images/undraw_medicine_b-1-ol.svg'
+import abc from '../../assets/images/undraw_medicine_b-1-ol.svg'
+import { useNavigate } from "react-router-dom";
 const LandingPage = () => {
+  const navigate = useNavigate()
   return (
     <div className="landing__container">
       <div className="landing__header">
@@ -10,8 +11,8 @@ const LandingPage = () => {
       </div>
       <hr className="landing__hr" />
       <div className="landing__btn__container">
-        <button className="login__btn">Login</button>
-        <button className="signup__btn">Signup</button>
+        <button className="login__btn" onClick={() => navigate("/landing/signin")}>Login</button>
+        <button className="signup__btn"  onClick={() => navigate("/landing/signup")}>Signup</button>
       </div>
       <div className="landing__dashboard__main">
         <div className="landing__img">
