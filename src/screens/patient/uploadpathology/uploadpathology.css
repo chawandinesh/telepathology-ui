@@ -1,6 +1,7 @@
 .upload__pathology__container {
   height: 100%;
-  width: 80vw;
+  width: 100% !important;
+  overflow: hidden !important;
 }
 
 .upload__pathology__header {
@@ -37,6 +38,8 @@
 }
 .table-responsive {
   margin: 25px;
+  height: 60% ​!important;
+  overflow: hidden;
   /* height: 65%; */
 }
 tbody {
