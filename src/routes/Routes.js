@@ -80,12 +80,14 @@ const AppRoutes = () => {
         />
         <Route path="/patient/registration" element={<PatientRecordEntry />} />
         <Route path="/pathologist/registration" element={<PathologistRecordEntry />} />
-        <Route path="/pathologist/login" element={isLoginSuccess() ? <Navigate to="/patient/dashboard" /> : <PathologistLogin />} />
-        <Route path="/patient/login" element={isLoginSuccess() ? <Navigate to="/patient/dashboard" /> : <PatientLogin />} />
-        <Route path="/" element={<Navigate to={isLoginSuccess() ? "/patient/dashboard" : "/patient/login"} />} />
-        <Route path="/landing" element={<LandingPage />} />
+        <Route path="/pathologist/login" element={<PathologistLogin />} />
+        <Route path="/patient/login" element={<PatientLogin />} />
+        {/* <Route path="/pathologist/login" element={isLoginSuccess() ? <Navigate to="/patient/dashboard" /> : <PathologistLogin />} />
+        <Route path="/patient/login" element={isLoginSuccess() ? <Navigate to="/patient/dashboard" /> : <PatientLogin />} /> */}
+        {/* <Route path="/" element={<Navigate to={isLoginSuccess() ? "/patient/dashboard" : "/patient/login"} />} /> */}
         <Route path="/landing/signin" element={<LandingSignin />} />
         <Route path="/landing/signup" element={<LandingSignup />} />
+        <Route path="/" element={<LandingPage />} />
       </Routes>
     </Router>
   );

@@ -19,10 +19,10 @@ const LandingSignin = () => {
            <h3 className="text-white font-weight-bold">For Patients</h3>
            <hr className="landing__hr" />
            <p>
-            The role of pathology is to detect and determine the causes of infections and disease.
-           </p>
+            A patient is any recipient of health care services that are performed by healthcare professionals. 
+            </p>
            <div className="landing__signin__container">
-               <button className="landing__signin" onclick={() => navigate("/patient/login")}>
+               <button className="landing__signin" onClick={() => navigate("/patient/login")}>
                    Login as patient
                </button>
            </div>
@@ -31,9 +31,8 @@ const LandingSignin = () => {
          <h3 className="text-white font-weight-bold">For Pathologist</h3>
          <hr className="landing__hr" />
          <p>
-
-         A patient is any recipient of health care services that are performed by healthcare professionals. 
-         </p>
+            The role of pathology is to detect and determine the causes of infections and disease.
+           </p>
          <div className="landing__signin__container">
                <button className="landing__signin" onClick={() => navigate("/pathologist/login")}>
                    Login as pathologist

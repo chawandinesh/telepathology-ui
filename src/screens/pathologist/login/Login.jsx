@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./login.css";
-import recovered from "../../../assets/images/recovered.png";
+import recovered from "../../../assets/images/pathologist.png";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -57,8 +57,8 @@ const Login = () => {
       <div className="form">
         <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="d-flex">
-            <h1 className="patient-head">Patient Login</h1>
             <img src={recovered} alt="" className="logo-p img-fluid mb-3" />
+            <h1 className="patient-head">Pathologist Login</h1>
           </div>
 
           <input
