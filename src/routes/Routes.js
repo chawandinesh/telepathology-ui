@@ -5,7 +5,7 @@ import LandingPage from "../screens/landing/LandingPage";
 import LandingSignin from "../screens/landing/LandingSignin";
 import LandingSignup from "../screens/landing/LandingSignuup";
 import PathologistDashboardMain from "../screens/pathologist/dashboard/PathologistDashboardMain";
-import PathologistRecordEntry from "../screens/pathologist/PathologistRecordEntry";
+import PathologistRecordEntry from "../screens/pathologist/registration/PathologistRecordEntry";
 import PatientDashboard from "../screens/patient/dashboard/PatientDashboard";
 import PatientDashboardMain from "../screens/patient/dashboard/PatientDashboardMain";
 import DiagnosisAndComments from "../screens/patient/diagnosisandcomments/DiagnosisAndComments";

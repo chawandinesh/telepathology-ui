@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
-import TextFieldComponent from "../../components/TextFieldComponent";
+import TextFieldComponent from "../../../components/TextFieldComponent";
 import "./pathologistrecordentry.css";
-import RadioComponent from "../../components/RadioComponent";
-import DatePickerComponent from "../../components/DatePickerComponent";
+import RadioComponent from "../../../components/RadioComponent";
+import DatePickerComponent from "../../../components/DatePickerComponent";
 import { Button, Col, Row } from "react-bootstrap";
-import TextAreaComponent from "../../components/TextAreaComponent";
+import TextAreaComponent from "../../../components/TextAreaComponent";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import SelectComponent from "../../components/SelectComponent";
-import logo1 from "../../assets/images/pathologist.png";
-import ImageUpload from "../../components/ImageUpload";
+import SelectComponent from "../../../components/SelectComponent";
+import logo1 from "../../../assets/images/pathologist.png";
+import ImageUpload from "../../../components/ImageUpload";
 import axios from "axios";
 import { Link } from "react-router-dom";
 

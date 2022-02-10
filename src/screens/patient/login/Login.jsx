@@ -43,7 +43,7 @@ const Login = () => {
         localStorage.setItem("token",token)
         localStorage.setItem("user", JSON.stringify(res.data))
         setTimeout(() => {
-          window.location.reload()
+          navigate("/patient/dashboard")
         }, 200);
       })
       .catch((err) => {

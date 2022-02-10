@@ -50,7 +50,8 @@ const Main = () => {
             <div class="header-input">
               <div class="input-group col-md-6 mt-4">
                 <input
-                  class="form-control py-3"
+                  class="form-control py-2"
+                  style={{marginRight: "10px"}}
                   type="search"
                   placeholder="search"
                   id="example-search-input"
