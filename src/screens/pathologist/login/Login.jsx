@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import _ from "lodash";
 import { Button, Spinner } from "react-bootstrap";
-import { patientLogin } from "../../../helpers/helpers";
+import { pathologistLogin, patientLogin } from "../../../helpers/helpers";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const Login = () => {
     console.log(e, "data");
     setLoginError(false)
     setLoginLoading(true)
-    patientLogin(e)
+    pathologistLogin(e)
       .then((res) => {
         return res.data
       })
@@ -43,7 +43,7 @@ const Login = () => {
         localStorage.setItem("token",token)
         localStorage.setItem("user", JSON.stringify(res.data))
         setTimeout(() => {
-          window.location.reload()
+          navigate("/pathologist/dashboard")
         }, 200);
       })
       .catch((err) => {

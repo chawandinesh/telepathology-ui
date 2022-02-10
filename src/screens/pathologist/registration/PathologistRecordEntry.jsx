@@ -15,6 +15,7 @@ import logo1 from "../../../assets/images/pathologist.png";
 import ImageUpload from "../../../components/ImageUpload";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { pathologistRegister } from "../../../helpers/helpers";
 
 function PathologistRecordEntry() {
   const [file, setFile] = useState(null);
@@ -26,15 +27,9 @@ function PathologistRecordEntry() {
     email: yup.string().email().required("Email is required"),
     phone: yup.string().required("Phone is required"),
     address: yup.string().required("Address is required"),
-    height: yup.number().typeError("Must be a number").required("Required"),
-    weight: yup.number().typeError("Must be a number").required("Required"),
-    bloodgroup: yup.string().required("Blood group is required"),
-    ICMRregistrationid: yup.string().required("ICMRregistrationid required"),
-    ABHAHealthId: yup
-      .number()
-      .typeError("Must be a  number")
-      .required("ABHAHealthId Required")
-      .test("len", "Must be exactly 10 digits", (val) => val.toString().length === 10),
+    ICMRregistrationId: yup.string().required("ICMRregistrationId required"),
+    designation: yup.string().required("Designation is Required"),
+    experience: yup.string().required("Experience is required"),
     emergencyFirstName: yup.string().required("Emergency First Name is Required"),
     emergencyLastName: yup.string().required("Emergency Last Name is Required"),
     emergencyRelationship: yup.string().required("Emergency Relationship is Required"),
@@ -70,13 +65,6 @@ function PathologistRecordEntry() {
       type: "textArea",
       placeholder: "Address",
     },
-    { name: "weight", label: "Weight", type: "number", placeholder: "Weight" },
-    {
-      name: "bloodgroup",
-      label: "Blood group",
-      type: "text",
-      placeholder: "Blood group",
-    },
     {
       name: "designation",
       label: "Designation",
@@ -90,8 +78,8 @@ function PathologistRecordEntry() {
       placeholder: "Experience (in years)",
     },
     {
-        name: "ICMRregistrationid",
-        label: "ICMR registration ID",
+        name: "ICMRregistrationId",
+        label: "ICMR Registration ID",
         type: "number",
         placeholder: "ICMR registration ID",
       },
@@ -176,26 +164,15 @@ function PathologistRecordEntry() {
   };
   const formData = new FormData();
 
-  const postApi = async () => {
-    await axios({
-      method: "POST",
-      url: `https://doctor-patient-project.herokuapp.com/api/patient/addPatient`,
-      data: formData,
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   const onSubmit = (e) => {
     if (file) {
       formData.append("image", file);
     }
     formData.append("data", JSON.stringify(e));
    console.log(e)
+   pathologistRegister(formData).then(res => {
+     console.log(res,'res...')
+   })
     // postApi();
   };
 
@@ -259,7 +236,7 @@ function PathologistRecordEntry() {
                       register={register}
                     />
                   ) : eachField.type === "image" ? (
-                    <ImageUpload getFile={getFile}>
+                    <ImageUpload getFile={getFile} file={file}>
                       <div className="rounded-md shadow-lg" style={{ width: "100%", backgroundColor: "#c5c6c7" }}>
                         <div className="items-center p-4 m-4 text-center border-4 border-dotted w-96 h-96">
                           <p className="self-auto">Drag and drop (Or click to drop) a image file</p>
@@ -376,12 +353,12 @@ function PathologistRecordEntry() {
               Submit
             </Button>
             {/* <Button className="w-100 mb-4 mt-2" variant="primary"> */}
-            <div className="text-center text-white pb-3 pt-3">
+            {/* <div className="text-center text-white pb-3 pt-3">
               <Link to="/patient/dashboard" className="text-white" >
                 Go to dashboard
                 </Link>
 
-            </div>
+            </div> */}
             {/* </Button> */}
           </form>
         </div>

@@ -28,10 +28,27 @@ export const patientRegister = async(data) => {
     }).then(res => res)
 }
 
+export const pathologistLogin = async(data) => {
+    return axios({
+        method:"POST",
+        url:`${api_url}/pathologist/pathologistLogin`,
+        data: data
+    }).then(res => res)
+}
+
+export const pathologistRegister = async(data) => {
+    return axios({
+        method:"POST",
+        url:`${api_url}/pathologist/addPathologist`,
+        data: data
+    }).then(res => res)
+}
+
+
 export const addReportFile = async(data) => {
     return axios({
         method:"POST",
-        url:`${api_url}/patient/addReportFile`,
+        url:`${api_url}/patient/addreportFile`,
         data: data
     }).then(res => res)
 }
@@ -44,9 +61,30 @@ export const updatePatient = async(data) => {
     }).then(res => res)
 }
 
-export const getUserById = async(id) => {
+export const getPatientById = async(id) => {
     return axios({
         method: "GET",
         url: `${api_url}/patient/getPatientById/${id}`,
     }).then(res => res)
+}
+
+export const getPathologistById = async(id) => {
+    return axios({
+        method: "GET",
+        url: `${api_url}/pathologist/getPathologistById/${id}`,
+    }).then(res => res)
+}
+
+export const getAllPatients = async() => {
+    return axios({
+        method: "GET",
+        url: `${api_url}/patient/getPatients`
+    })
+}
+
+export const getAllPathologists = async() => {
+    return axios({
+        method: "GET",
+        url: `${api_url}/pathologist/getPathologists`
+    })
 }

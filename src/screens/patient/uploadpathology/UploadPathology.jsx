@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import ImageUpload from "../../../components/ImageUpload";
-import { addReportFile, getUser, getUserById, baseUrl } from "../../../helpers/helpers";
+import { addReportFile, getUser, getPatientById, baseUrl } from "../../../helpers/helpers";
 import "./uploadpathology.css";
 import { Toast, ToastContainer } from "react-bootstrap";
 import ToastComponent from "../../../components/ToastComponent";
@@ -29,7 +29,7 @@ const UploadPathology = () => {
   };
 
   const getUserData = (id) => {
-    getUserById(id)
+    getPatientById(id)
       .then((res) => {
         console.log(res, "res...");
         getReportImage();

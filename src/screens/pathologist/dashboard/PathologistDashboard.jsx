@@ -6,7 +6,7 @@ import { FaWpforms, FaLaptopMedical, FaSignOutAlt } from "react-icons/fa";
 import { BsFileSpreadsheet } from "react-icons/bs";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
-import {  getUserById, baseUrl, updatePatient } from "../../../helpers/helpers";
+import {  getPathologistById, baseUrl, updatePatient } from "../../../helpers/helpers";
 import ToastComponent from "../../../components/ToastComponent";
 
 const profileImageRef = React.createRef();
@@ -25,7 +25,7 @@ const PathologistDashboard = ({ navigation, children }) => {
 
   const getUserData = () => {
     const userId = JSON.parse(localStorage.getItem("user"))
-    getUserById(_.get(userId,"_id")).then(res => {
+    getPathologistById(_.get(userId,"_id")).then(res => {
       setUser(_.get(res,"data.data",""));
     }).catch((err) => {
       console.log(err);

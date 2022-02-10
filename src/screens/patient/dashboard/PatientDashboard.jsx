@@ -6,7 +6,7 @@ import { FaWpforms, FaLaptopMedical, FaSignOutAlt } from "react-icons/fa";
 import { BsFileSpreadsheet } from "react-icons/bs";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
-import {  getUserById, baseUrl, updatePatient } from "../../../helpers/helpers";
+import {  getPatientById, baseUrl, updatePatient } from "../../../helpers/helpers";
 import ToastComponent from "../../../components/ToastComponent";
 
 const profileImageRef = React.createRef();
@@ -25,7 +25,7 @@ const PatientDashboard = ({ navigation, children }) => {
 
   const getUserData = () => {
     const userId = JSON.parse(localStorage.getItem("user"))
-    getUserById(_.get(userId,"_id")).then(res => {
+    getPatientById(_.get(userId,"_id")).then(res => {
       setUser(_.get(res,"data.data",""));
     }).catch((err) => {
       console.log(err);
@@ -154,9 +154,9 @@ const PatientDashboard = ({ navigation, children }) => {
                 width="100%"
                 style={{ borderRadius: "50%", objectFit: "cover" }}
               />
-              <div className="faediticon__container" onClick={() => profileImageRef.current.click()}>
+              {/* <div className="faediticon__container" onClick={() => profileImageRef.current.click()}>
                 <FaEdit className="faediticon" />
-              </div>
+              </div> */}
             </div>
             <div className="profile__name">
               <h5>{`${_.get(user, "firstName","")} ${_.get(user, "lastName","")}`}</h5>

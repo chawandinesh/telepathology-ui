@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { FaEye } from "react-icons/fa";
+import SImg from '../../../assets/images/recovered.png'
 import ImageUpload from "../../../components/ImageUpload";
 import ModalComponent from "../../../components/ModalComponent";
-import { addReportFile, baseUrl, getUserById } from "../../../helpers/helpers";
+import { addReportFile, baseUrl, getPathologistById, getPatientById, getUserData } from "../../../helpers/helpers";
 import _ from 'lodash'
 import "./uploadpathology.css";
 import ToastComponent from "../../../components/ToastComponent";
 const PathologySamples = () => {
   const [file, setFile] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
-  console.log(file,'file...');
+  const [viewModal, setViewModal] = useState({
+    show: false,
+    info: {},
+  });
+
   const [modalData, setModalData] = useState({
     show: false,
     info: {},
@@ -28,15 +33,15 @@ const PathologySamples = () => {
   const formData = new FormData()
 
   const getCurrentLoginUserData = () => {
-    const userId = _.get(JSON.parse(localStorage.getItem("user")),'_id')
-    getUserById(userId).then(res => {
-      console.log(res,'res..');
+    const userId = _.get(getUserData(),'_id')
+    getPatientById(userId).then(res => {
       setCurrentUser(_.get(res,'data.data',''))
     }).catch((err) => {
       console.log(err,'error');
     })
   }
 
+  console.log(currentUser,'currentuser')
   useEffect(() => {
    getCurrentLoginUserData()
   }, []);
@@ -45,9 +50,8 @@ const PathologySamples = () => {
   const postReportFile = () => {
     setModalData({...modalData,show: false})
     formData.append("reportFile", file)
-    formData.append("data", JSON.stringify({id: _.get(currentUser,'_id',''),oldimage: _.get(currentUser,'reportFile','')}))
+    formData.append("data", JSON.stringify({_id: _.get(getUserData(),'_id','')}))
     addReportFile(formData).then(res => {
-      console.log(res,'res..');
       setFile(null)
       setState({
         ...state,
@@ -55,6 +59,7 @@ const PathologySamples = () => {
         show:true,
         message:"successfully uploaded"
       })
+      getCurrentLoginUserData()
     
     }).catch((err) => {
       console.log(err);
@@ -66,8 +71,8 @@ const PathologySamples = () => {
       })
     })
   }
-  const url = file ? URL.createObjectURL(file) : _.get(currentUser,'reportFile') ? `${baseUrl}/${_.get(currentUser,'reportFile','')}` :null
-   console.log(url)
+  const url = file ? URL.createObjectURL(file) : null
+
   return (
     <div className="upload__pathology__container">
       <div className="dashboard__main__header">
@@ -84,29 +89,41 @@ const PathologySamples = () => {
           Upload Pathology sample
         </button>
       </div>
+
+      <h4 className="text-white" style={{paddingLeft:"20px",textDecoration:'underline'}}>Previously uploaded samples :</h4>
       <Table striped bordered hover responsive variant="dark">
         <thead>
           <tr>
             <th>#</th>
-            <th>Uploaded Date</th>
+            {/* <th>Uploaded Date</th> */}
             <th>Name</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {[1, 2, 234232, 4324, 23, 12, 3434, 34343, 5454, 34232, 3424, 4535, 3542].map((e, idx) => (
+          {
+            _.size(_.get(currentUser,'reportFile','')) ?
+          
+          _.map(_.get(currentUser,'reportFile'),(e, idx) => {
+            const fileName= e.filePath.slice(e.filePath.indexOf("/")+1,e.filePath.indexOf("."))
+            const name = `sample_${fileName.slice(fileName.indexOf("_")+1, fileName.indexOf("."))}`
+            console.log(name)
+            return(
             <tr>
-              <td>{idx}</td>
-              <td>{item.uploadedDate}</td>
-              <td>{item.name}</td>
+              <td>{idx + 1}</td>
+              {/* <td>{item.uploadedDate}</td> */}
+              <td>{name}</td>
               <td>
-                <FaEye style={{ cursor: "pointer" }} />
+                <FaEye style={{ cursor: "pointer" }} onClick={() => setViewModal({...viewModal,show:true,info: e})} />
               </td>
             </tr>
-          ))}
+          )})
+          :
+          <h4 className="mt-3 text-center">No Samples found</h4>
+        }
         </tbody>
       </Table>
-      <ModalComponent modalData={modalData} handleSubmit= {postReportFile} setModalData={setModalData}>
+      <ModalComponent title="Upload Sample Image" modalData={modalData} handleSubmit= {postReportFile} setModalData={setModalData}>
         {/* <h3 className="text-white">lskdjf</h3> */}
             <div style={{height:"100%", width:"100%", display:'flex', justifyContent:'center', alignItems:"center"}}>
         <ImageUpload hidelabel={true}
@@ -131,6 +148,11 @@ const PathologySamples = () => {
           </div>
         </ImageUpload>
             </div>
+      </ModalComponent>
+      <ModalComponent hideSaveBtn title="Sample Details" modalData={viewModal}  setModalData={setViewModal}>
+        <div style={{width:"90%",height:"90%", display:"flex", justifyContent:"center", alignItems:'center'}}>
+          <img src={`${baseUrl}/${viewModal.info.filePath}`} width="100%" height="100%" alt="noimg"/>
+        </div>
       </ModalComponent>
       <ToastComponent setState={setState} state={state}  />
     </div>
