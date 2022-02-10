@@ -78,17 +78,23 @@ function PathologistRecordEntry() {
       placeholder: "Blood group",
     },
     {
+      name: "designation",
+      label: "Designation",
+      type: "text",
+      placeholder: "Designation",
+    },
+    {
+      name: "experience",
+      label: "Experience",
+      type: "text",
+      placeholder: "Experience (in years)",
+    },
+    {
         name: "ICMRregistrationid",
         label: "ICMR registration ID",
         type: "number",
         placeholder: "ICMR registration ID",
       },
-    {
-      name: "ABHAHealthId",
-      label: "ABHA Health ID",
-      type: "number",
-      placeholder: "ex- 55 2548 3355",
-    },
     {
       name: "maritalstatus",
       label: "Marital Status",
@@ -96,8 +102,6 @@ function PathologistRecordEntry() {
       options: [
         { label: "Single", name: "single" },
         { label: "Married", name: "married" },
-        { label: "Diversed", name: "diversed" },
-        { label: "Widow", name: "widow" },
       ],
       placeholder: "Marital Status",
     },

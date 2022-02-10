@@ -15,6 +15,7 @@ import PatientRecordEntry from "../screens/patient/registration/PatientRecordEnt
 import ResultsReports from "../screens/patient/results-reports/ResultsReports";
 import PathologySamples from "../screens/patient/uploadpathology/PathologySamples";
 import UploadPathology from "../screens/patient/uploadpathology/UploadPathology";
+import Dashboard from "../screens/pathologist/dashboard/Dahboard";
 
 const AppRoutes = () => {
   const PatientRoute = ({ children }) => {
@@ -73,9 +74,9 @@ const AppRoutes = () => {
          <Route
           path="/pathologist/dashboard"
           element={
-            <PathologistRoute>
-              <PathologistDashboardMain />
-            </PathologistRoute>
+            // <PathologistRoute>
+              <Dashboard />
+            // </PathologistRoute>
           }
         />
         <Route path="/patient/registration" element={<PatientRecordEntry />} />

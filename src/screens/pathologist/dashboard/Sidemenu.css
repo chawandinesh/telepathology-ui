@@ -1,0 +1,30 @@
+.sidemenu-wrapper{
+    width:90px;
+    background-color: #66fcf1;
+    border: 1px solid #eee;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    /* height: 100vh;
+    overflow-y: auto; */
+}
+.side-icons{
+    width: 30px;
+    margin-top: 20px;
+    
+}
+
+.menu{
+    list-style-type: none;
+    width:100%;
+    display: block;
+    padding: 0;
+}
+.sidemenu-li{
+    text-align: center;
+}
+.icon-div{
+    flex-flow: column;
+}
+.sidemenu-lower-content.d-flex.justify-content-end {
+    margin-top: 145px;
+}

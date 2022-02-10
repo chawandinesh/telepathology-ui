@@ -98,8 +98,6 @@ function PatientRecordEntry() {
       options: [
         { label: "Single", name: "single" },
         { label: "Married", name: "married" },
-        { label: "Diversed", name: "diversed" },
-        { label: "Widow", name: "widow" },
       ],
       placeholder: "Marital Status",
     },

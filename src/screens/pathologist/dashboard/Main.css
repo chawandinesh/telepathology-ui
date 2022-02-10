@@ -1,0 +1,108 @@
+.main-wrapper {
+    width: calc(100% - 90px);
+    height: 100vh;
+    background-color: #1f2833;
+    overflow-y: auto;
+  }
+  .card {
+    width: 15rem;
+    /* height:13rem; */
+    margin-left: 16px;
+    /* margin-top:40px */
+  }
+  .main-icons {
+    margin-top: 0;
+    height: 25px;
+    width: 25px;
+    margin-right: 10px;
+  }
+  input#example-search-input {
+    background: #fff;
+    border: none !important;
+  }
+  /* .card {
+      float: left;
+      background: #fff;
+      padding: 20px;
+      margin: 0 20px 0 0;
+    }
+     */
+  
+  .patients-details {
+    background: #fff;
+    min-height: 50px;
+    height: 116px;
+    padding: 25px;
+    /* margin-left: 40px; */
+    border-radius: 20px;
+    margin-top: 0px;
+  }
+  span.percentage {
+    background: #66fcf163;
+    border-radius: 7px;
+    padding: 3px;
+  }
+  
+  .patients-box.d-flex {
+    flex-flow: column;
+  }
+  .analytics-box {
+    background: #fff;
+    height: 263px;
+    padding: 19px;
+    border-radius: 10px;
+  }
+  .heading {
+    color: #01fff4;
+  }
+  .events-wrapper {
+    background: #fff;
+    border-radius: 10px;
+    padding: 28px;
+    /* width: 82%; */
+  }
+  .patient-details {
+    background: #eee;
+    width: 76%;
+    border-radius: 13px;
+    padding: 11px;
+  }
+  .form-switch .form-check-input {
+    width: 3em !important;
+    height: 20px;
+    margin-left: auto !important;
+  }
+  img.common-icons {
+    width: 35px;
+    margin-left: 10px;
+  }
+  
+  svg.donutchart {
+    height: 206px !important;
+    width: 338px !important;
+  }
+  
+  button.btn.btn-outline-secondary.border-left-0.border.search-button {
+    background: white;
+  }
+  .search-icon {
+    height: 15px;
+    weight: 15px;
+  }
+  .color-indicator {
+    padding-right: 20px;
+    padding-top: 1px;
+      height: 15px;
+    margin-right: 5px;
+    background: #45afa0;
+  }
+  .color-indicator-2 {
+    padding-right: 20px;
+    padding-top: 1px;
+    background: #6fcd9d;
+    height: 15px;
+    margin-right: 5px;
+  }
+  .space-detail{
+      margin-left: -23px;
+  }
