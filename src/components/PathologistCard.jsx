@@ -1,10 +1,14 @@
 import React from "react";
-import MyImg from "../assets/images/alex.jpeg";
-const PathologistCard = () => {
+// import MyImg from "../assets/images/alex.jpeg";
+import { baseUrl } from "../helpers/helpers";
+import pathologistImg from '../assets/images/pathologist.png'
+const PathologistCard = ({name,designation,experience,image}) => {
+  const imageurl = image ? `${baseUrl}/${image}` : pathologistImg
+  const userName = name === "undefined undefined"  ? "Test Pathologist" : name
   return (
       <div style={{ height: "auto", width: "300px", borderRadius: "5px",margin:"10px 30px", boxShadow: "0px 2px 7px 0px #fff" }}>
-        <div style={{ height: "180px", backgroundColor: "#766" }}>
-          <img src={MyImg} height="100%" width="100%" alt="pathologist" />
+        <div style={{ height: "180px"}}>
+          <img src={imageurl} height="100%" width="100%" alt="pathologist" />
         </div>
         <div
           style={{
@@ -15,12 +19,12 @@ const PathologistCard = () => {
             borderTop: "none",
           }}
         >
-          <h3>Alex scholder</h3>
+          <h3>{userName}</h3>
           <div>
-            <span>professional gynochologist</span>
+            <span>{designation}</span>
           </div>
           <div>
-            <span>2 years experience</span>
+            <span>{experience}</span>
           </div>
         </div>
       </div>

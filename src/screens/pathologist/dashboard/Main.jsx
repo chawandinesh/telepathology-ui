@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Main.css";
 import calendar from "../../../assets/images/calendar.png";
 import ellipsis from "../../../assets/images/ellipsis.png";
@@ -15,10 +15,14 @@ import {
   PieChart,
   Pie,
 } from "recharts";
-
+import moment from 'moment'
+import { getAllPatients } from "../../../helpers/helpers";
+import _ from "lodash";
 const Main = () => {
+  const [patients, setPatients] = useState([])
   // Donut chart
-
+  const date = moment(new Date()).format("DD-MMM-YYYY")
+  console.log(date,'date...')
   // analytics chart
   const data = [
     { name: "Mon", uv: 400, pv: 2400, amt: 2400 },
@@ -40,6 +44,37 @@ const Main = () => {
       <YAxis />
     </LineChart>
   );
+
+  const getAllPatientsData = () => {
+    getAllPatients().then(res => {
+      // console.log(_.get(res,'data.data'),'res...')
+      setPatients(_.get(res,'data.data',''))
+    })
+  }
+
+  useEffect(() => {
+    getAllPatientsData()
+  }, [])
+  
+  console.log(patients)
+  const getpatientsBasedOnGender = (gender) => _.filter(patients,each => _.get(each,'gender') === gender)
+  const percentageOfGender =(gender)=> (getpatientsBasedOnGender(gender).length/patients.length) * 100
+
+  // const newPatients = patients.map(e => moment(e).format("DD-MMM-YYYY"))
+  // console.log(newPatients,date)
+  const getPatientsAccordingToJoined = (type) => {
+    if(type==="new"){
+     const newP =  patients.filter(e => moment(e).format("DD-MMM-YYYY") === date)
+     return {count:newP.length, percentage: (newP.length/patients.length) * 100,list:newP}
+    }else if(type === "old"){
+      const oldP =  patients.filter(e => moment(e).format("DD-MMM-YYYY") !== date)
+      return {count:oldP.length, percentage: (oldP.length/patients.length) * 100,list:oldP}
+    }else{
+      return []
+    }
+  }
+
+
 
   return (
     <div className="main-wrapper">
@@ -79,7 +114,7 @@ const Main = () => {
             <h1 className="ml-3 heading">Dashboard</h1>
             <h4 className="">
               <img className="main-icons" src={calendar} alt="calender" />
-              wed 24.02.2021
+              {date}
             </h4>
           </div>
           {/* main content mid */}
@@ -91,13 +126,13 @@ const Main = () => {
                     data={[
                       {
                         name: "Group A",
-                        value: 400,
+                        value: getpatientsBasedOnGender('male').length,
                         fill:"#45afa0",
                        
                       },
                       {
                         name: "Group B",
-                        value: 300,
+                        value: getpatientsBasedOnGender("female").length,
                         fill:"#6fcd9d"
                       },
                     ]}
@@ -111,8 +146,8 @@ const Main = () => {
                 </PieChart>
               </div>
               <div className="chart-details text-center pt-0 pb-0 m-0">
-                <p className="mb-1 space-detail"><span className="color-indicator"></span>Men-60%</p>
-                <p className="mt-0"><span className="color-indicator-2"/>Women-40%</p>
+                <p className="mb-1 space-detail"><span className="color-indicator"></span>Men-{percentageOfGender("male")}%</p>
+                <p className="mt-0"><span className="color-indicator-2"/>Women-{percentageOfGender("female")}%</p>
               </div>
             </div>
             <div className="patients-box d-flex">
@@ -120,10 +155,10 @@ const Main = () => {
                 <h5>New patients</h5>
                 <div className="patients-number d-flex justify-content-between align-items-center">
                   <div>
-                    <h2>54</h2>
+                    <h2>{getPatientsAccordingToJoined("new").count}</h2>
                   </div>
                   <div>
-                    <span className="percentage">^ 51%</span>
+                    <span className="percentage">^ {getPatientsAccordingToJoined("new").percentage}%</span>
                   </div>
                 </div>
               </div>
@@ -131,26 +166,93 @@ const Main = () => {
                 <h5>Old patients</h5>
                 <div className="patients-number d-flex justify-content-between align-items-center">
                   <div>
-                    <h2>32</h2>
+                    <h2>{getPatientsAccordingToJoined("old").count}</h2>
                   </div>
                   <div>
-                    <span className="percentage bg-red">^ 02%</span>
+                    <span className="percentage bg-red">^ {getPatientsAccordingToJoined("old").percentage}%</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="analytics-box">
+            <div className="col-6">
+            <h3 className="ml-3 heading mb-3">Your patients today</h3>
+            <div className="events-wrapper" style={{maxHeight:'350px', overflow:"auto"}}>
+              {
+                getPatientsAccordingToJoined("new").list.map(e => {
+                  return(
+              <div className=" d-flex mb-2  justify-content-between align-items-center">
+                <div className="patients-timing">
+                  <p>{moment(e.createdAt).format("hh:mm a")}</p>
+                </div>
+                <div className="patient-details d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5>{`${_.get(e,'firstName')} ${_.get(e,'lastName')}`}</h5>
+                    {/* <span>Diagnosis:Bronchities</span> */}
+                  </div>
+                  <div>
+                    <img
+                      className="main-icons"
+                      src={ellipsis}
+                      anchor="edit"
+                    ></img>
+                  </div>
+                </div>
+              </div>
+
+                  )
+                })
+              }
+              {/* <div className=" d-flex  justify-content-between align-items-center mt-2">
+                <div className="patients-timing">
+                  <p>11:15 am</p>
+                </div>
+                <div className="patient-details d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5>Dakota smith</h5>
+                    <span>Diagnosis:stroke</span>
+                  </div>
+                  <div>
+                    <img
+                      className="main-icons"
+                      src={ellipsis}
+                      anchor="edit"
+                    ></img>
+                  </div>
+                </div>
+              </div>
+              <div className=" d-flex  justify-content-between align-items-center mt-2">
+                <div className="patients-timing">
+                  <p>12:30 am</p>
+                </div>
+                <div className="patient-details d-flex justify-content-between align-items-center">
+                  <div>
+                    <h5>Jhon lane</h5>
+                    <span>Diagnosis:stroke</span>
+                  </div>
+                  <div>
+                    <img
+                      className="main-icons"
+                      src={ellipsis}
+                      anchor="edit"
+                    ></img>
+                  </div>
+                </div>
+              </div> */}
+            </div>
+          </div>
+            {/* <div className="analytics-box">
               <h3 class="">Analytics</h3>
               {renderLineChart}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
       <div className="container-fluid mt-3">
         <div className="row mb-5">
           <div className="col-6">
-            <h3 className=" ml-3 heading mb-3">Events</h3>
-            <div className="events-wrapper d-flex justify-content-between ml-3">
+            {/* <h3 className=" ml-3 heading mb-3">Events</h3>
+            <h3 className="text-white">No events for now</h3> */}
+            {/* <div className="events-wrapper d-flex justify-content-between ml-3">
               <div className="team-meeting">
                 <h5>Team Meating</h5>
                 <span>13:30-14:40</span>
@@ -168,8 +270,8 @@ const Main = () => {
                   <img src={arrow} alt="arrow" className="common-icons" />
                 </div>
               </div>
-            </div>
-            <div className="events-wrapper d-flex justify-content-between ml-3 mt-4">
+            </div> */}
+            {/* <div className="events-wrapper d-flex justify-content-between ml-3 mt-4">
               <div className="team-meeting">
                 <h5>Team Meating</h5>
                 <span>13:30-14:40</span>
@@ -187,9 +289,9 @@ const Main = () => {
                   <img src={arrow} alt="arrow" className="common-icons" />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
-          <div className="col-6">
+          {/* <div className="col-6">
             <h3 className="ml-3 heading mb-3">Your patients today</h3>
             <div className="events-wrapper">
               <div className=" d-flex  justify-content-between align-items-center">
@@ -247,7 +349,7 @@ const Main = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -16,7 +16,9 @@ import ResultsReports from "../screens/patient/results-reports/ResultsReports";
 import PathologySamples from "../screens/patient/uploadpathology/PathologySamples";
 import UploadPathology from "../screens/patient/uploadpathology/UploadPathology";
 import Dashboard from "../screens/pathologist/dashboard/Dahboard";
-
+import Main from "../screens/pathologist/dashboard/Main";
+import PathologistsRequests from '../screens/pathologist/requests/PathologistsRequests'
+import PatientsList from '../screens/pathologist/patientsList/PatientsList'
 const AppRoutes = () => {
   const PatientRoute = ({ children }) => {
     if (isLoginSuccess()) {
@@ -28,7 +30,7 @@ const AppRoutes = () => {
 
   const PathologistRoute = ({ children }) => {
     if (isLoginSuccess()) {
-      return <PatientDashboard>{children}</PatientDashboard>;
+      return <Dashboard>{children}</Dashboard>;
     } else {
       return <Navigate to={"/pathologist/login"} />;
     }
@@ -37,6 +39,32 @@ const AppRoutes = () => {
   return (
     <Router>
       <Routes>
+
+      <Route
+          path="/pathologst/dashboard"
+          element={
+            <PathologistRoute>
+                <Main />
+            </PathologistRoute>
+          }
+        />
+          <Route
+          path="/pathologst/diagnosis-requests"
+          element={
+            <PathologistRoute>
+               <PathologistsRequests/>
+            </PathologistRoute>
+          }
+        />
+           <Route
+          path="/pathologst/patients-list"
+          element={
+            <PathologistRoute>
+               <PatientsList/>
+            </PathologistRoute>
+          }
+        />
+
         <Route
           path="/patient/dashboard/pathology-sample"
           element={
@@ -71,14 +99,14 @@ const AppRoutes = () => {
             </PatientRoute>
           }
         />
-         <Route
+         {/* <Route
           path="/pathologist/dashboard"
           element={
             // <PathologistRoute>
               <Dashboard />
             // </PathologistRoute>
           }
-        />
+        /> */}
         <Route path="/patient/registration" element={<PatientRecordEntry />} />
         <Route path="/pathologist/registration" element={<PathologistRecordEntry />} />
         <Route path="/pathologist/login" element={<PathologistLogin />} />

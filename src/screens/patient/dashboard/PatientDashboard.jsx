@@ -61,12 +61,12 @@ const PatientDashboard = ({ navigation, children }) => {
                 icon: <FaWpforms />,
                 path: "/patient/dashboard/diagnosiscomments",
               },
-              {
-                name: "View results and report",
-                selected: false,
-                icon: <BsFileSpreadsheet />,
-                path: "/patient/dashboard/results-reports",  
-              },
+              // {
+              //   name: "View results and report",
+              //   selected: false,
+              //   icon: <BsFileSpreadsheet />,
+              //   path: "/patient/dashboard/results-reports",  
+              // },
               // {
               //   name: "Recommendations",
               //   selected: false,
@@ -154,9 +154,9 @@ const PatientDashboard = ({ navigation, children }) => {
                 width="100%"
                 style={{ borderRadius: "50%", objectFit: "cover" }}
               />
-              {/* <div className="faediticon__container" onClick={() => profileImageRef.current.click()}>
+              <div className="faediticon__container" onClick={() => profileImageRef.current.click()}>
                 <FaEdit className="faediticon" />
-              </div> */}
+              </div>
             </div>
             <div className="profile__name">
               <h5>{`${_.get(user, "firstName","")} ${_.get(user, "lastName","")}`}</h5>

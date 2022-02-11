@@ -8,6 +8,7 @@ import PathologistCard from "../../../components/PathologistCard";
 import { getAllPathologists } from "../../../helpers/helpers";
 
 function PatientDashboardMain() {
+  const [value, setValue] = useState("")
   const [selectedOption, setSelectedOption] = useState(undefined);
   const [pathologistList, setPathologistList] = useState([])
   const options = _.map(pathologistList.filter(e => e.firstName || e.lastName),(each) => {return {value:each._id, label:`${each.firstName} ${each.lastName}`}})
@@ -16,15 +17,22 @@ function PatientDashboardMain() {
   //   { value: "doctor2", label: "Doctor2" },
   //   { value: "doctor3", label: "Doctor3" },
   // ];
+ console.log(pathologistList)
+  const handleGetValue = (value) => {
+    console.log(value,'value')
+    setValue(value)
+  }
 
+   console.log(value,'value')
   const getListOfPathologists = () => {
     getAllPathologists().then(res => {
       return res.data
     }).then(result => {
-      setPathologistList(result.data)
+      // setPathologistList(result.data)
+      setPathologistList(result.data.filter(e => e.firstName || e.lastName))
     })
   }
-
+  console.log(pathologistList)
   useEffect(() => {
    getListOfPathologists()
   }, [])
@@ -37,6 +45,7 @@ function PatientDashboardMain() {
       <div style={{ width: "100%", marginTop: "50px", display: "flex", justifyContent: "center" }}>
         <div style={{ width: "500px" }}>
           <ReactSelectComponent
+             getVal={handleGetValue}
             options={options}
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
@@ -47,9 +56,11 @@ function PatientDashboardMain() {
         <div style={{width:"100%", display:"flex",marginTop:'100px', justifyContent:'center'}}>
 
         <div style={{display:"flex", flexDirection:"row", overflowX:"auto",flexWrap:'nowrap', whiteSpace:'nowrap',width:"800px"}}>
-          {pathologistList.filter(e => e.firstName || e.lastName).map((each) =>  (
-            <PathologistCard/>
-          ))}
+          {pathologistList.filter(e => e.firstName.includes(value) ||  e.lastName.includes(value)).map((each) =>  {
+            console.log(each)
+            return(
+            <PathologistCard name={`${each.firstName} ${each.lastName}`} designation={each.designation} experience={each.experience} image={each.image}/>
+          )})}
         </div>
         </div>
      

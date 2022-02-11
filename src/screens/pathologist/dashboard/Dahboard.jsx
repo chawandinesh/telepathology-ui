@@ -3,11 +3,11 @@ import Main from './Main';
 import Sidemenu from './Sidemenu';
 import "./Dashboard.css";
 
-const Dashboard = () => {
+const Dashboard = ({children}) => {
   return (
       <div className="dashboard-main">
           <Sidemenu />
-          <Main />
+          {children}
       </div>
   )
 };
