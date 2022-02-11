@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import "./patientdashboard.css";
 import { MdOutlineSpaceDashboard, MdOutlineRecommend, MdOutlineAppRegistration } from "react-icons/md";
-import { FaWpforms, FaLaptopMedical, FaSignOutAlt } from "react-icons/fa";
+import { FaWpforms, FaLaptopMedical, FaSignOutAlt, FaUser } from "react-icons/fa";
 import { BsFileSpreadsheet } from "react-icons/bs";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
@@ -60,6 +60,12 @@ const PatientDashboard = ({ navigation, children }) => {
                 selected: true,
                 icon: <FaWpforms />,
                 path: "/patient/dashboard/diagnosiscomments",
+              },
+              {
+                name: "Profile",
+                selected: true,
+                icon: <FaUser />,
+                path: "/patient/profile",
               },
               // {
               //   name: "View results and report",

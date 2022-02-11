@@ -19,6 +19,8 @@ import Dashboard from "../screens/pathologist/dashboard/Dahboard";
 import Main from "../screens/pathologist/dashboard/Main";
 import PathologistsRequests from '../screens/pathologist/requests/PathologistsRequests'
 import PatientsList from '../screens/pathologist/patientsList/PatientsList'
+import PatientProfile from "../screens/profile/PatientProfile";
+import PathologistProfile from '../screens/profile/PathologistProfile'
 const AppRoutes = () => {
   const PatientRoute = ({ children }) => {
     if (isLoginSuccess()) {
@@ -64,7 +66,22 @@ const AppRoutes = () => {
             </PathologistRoute>
           }
         />
-
+           <Route
+          path="/pathologist/profile"
+          element={
+            <PathologistRoute>
+              <PathologistProfile />
+            </PathologistRoute>
+          }
+        />
+          <Route
+          path="/patient/profile"
+          element={
+            <PatientRoute>
+              <PatientProfile />
+            </PatientRoute>
+          }
+        />
         <Route
           path="/patient/dashboard/pathology-sample"
           element={

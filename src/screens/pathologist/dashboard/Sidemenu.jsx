@@ -68,6 +68,20 @@ const Sidemenu = () => {
               <a href="#">
                 <img src={chart} className="side-icons"></img>
               </a>
+            </li> */}
+            <li className="sidemenu-li"  style={{cursor:'pointer'}}  onClick={() => navigate("/pathologist/profile")} >
+              <a>
+                <img src={user} className="side-icons" style={ pathName ==="/pathologist/profile" ? {
+                  backgroundColor: "white",
+                  padding: "5px",
+                  width: "50px",
+                }: {}} ></img>
+              </a>
+            </li>
+            {/* <li className="sidemenu-li">
+              <a href="#">
+                <img src={chart} className="side-icons"></img>
+              </a>
             </li>
             <li className="sidemenu-li">
               <a href="#">
