@@ -128,7 +128,6 @@ const Main = () => {
                         name: "Group A",
                         value: getpatientsBasedOnGender('male').length,
                         fill:"#45afa0",
-                       
                       },
                       {
                         name: "Group B",

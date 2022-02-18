@@ -73,7 +73,7 @@ const ConsultRequests = () => {
         <thead>
           <tr style={{ textAlign: "center" }}>
             <th>Date and Time</th>
-            <th>Pathologist Name</th>
+            <th>patient Name</th>
             <th>Information</th>
             <th>Status</th>
             <th>Actions</th>
@@ -84,7 +84,7 @@ const ConsultRequests = () => {
             _.map(requests, (e, idx) => {
               console.log(e.time);
               const dateTime = `${moment(e.date).format("DD-MM-YYYY")} ${e.time}`;
-              const name = `${_.get(e, "pathologist.firstName")} ${_.get(e, "pathologist.lastName")}`;
+              const name = `${_.get(e, "patient.firstName")} ${_.get(e, "patient.lastName")}`;
               return (
                 <tr style={{ textAlign: "center" }}>
                   <td>{dateTime}</td>

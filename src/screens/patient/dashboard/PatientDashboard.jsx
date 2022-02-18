@@ -119,8 +119,8 @@ const PatientDashboard = ({ navigation, children }) => {
   const handleLogout = () => {
     window.localStorage.clear();
     setTimeout(() => {
-      location.href = '/'
-      // window.location.reload();
+      // location.href = '/'
+      window.location.reload();
     }, 200);
   };
 
