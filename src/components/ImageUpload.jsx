@@ -9,7 +9,9 @@ export default function ImageUpload({ file, setFile, fileName, hidelabel, childr
   return (
     <Form.Group className="mb-3 text__field image__file" controlId="formBasicEmail">
       {hidelabel ? <div></div> : <div className="text-white">Image</div>}
-      <FileUploader children={children} handleChange={(e) => setFile(e)} name="file" types={fileTypes} />
+      <FileUploader children={children} handleChange={(e) => {
+        setFile(e)
+      }} name="file" types={fileTypes} />
       <p style={{ color: file ? "#66fcf1" :"red" }}>
         {file ? `File name: ${file.name}` : fileName ? `File name: ${fileName}` : "no files uploaded yet"}
       </p>

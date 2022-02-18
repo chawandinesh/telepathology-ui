@@ -19,6 +19,7 @@ import { pathologistRegister } from "../../../helpers/helpers";
 
 function PathologistRecordEntry() {
   const [file, setFile] = useState(null);
+  console.log(file,'file')
   const patientRegisterSchema = yup.object().shape({
     firstName: yup.string().required("First name is required"),
     lastName: yup.string().required("Last name is required"),
@@ -158,10 +159,8 @@ function PathologistRecordEntry() {
   useEffect(() => {
     reset({ gender: "male", name_prefix: "mr" });
   }, []);
+  console.log(file,'file')
 
-  const getFile = (file) => {
-    setFile(file);
-  };
   const formData = new FormData();
 
   const onSubmit = (e) => {
@@ -236,7 +235,7 @@ function PathologistRecordEntry() {
                       register={register}
                     />
                   ) : eachField.type === "image" ? (
-                    <ImageUpload getFile={getFile} file={file}>
+                    <ImageUpload file={file} setFile={(file) => setFile(file)}>
                       <div className="rounded-md shadow-lg" style={{ width: "100%", backgroundColor: "#c5c6c7" }}>
                         <div className="items-center p-4 m-4 text-center border-4 border-dotted w-96 h-96">
                           <p className="self-auto">Drag and drop (Or click to drop) a image file</p>

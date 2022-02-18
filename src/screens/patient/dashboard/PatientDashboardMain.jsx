@@ -42,7 +42,7 @@ function PatientDashboardMain() {
       <div className="dashboard__main__header">
         <h3>Dashboard</h3>
       </div>
-      <div style={{ width: "100%", marginTop: "50px", display: "flex", justifyContent: "center" }}>
+      {/* <div style={{ width: "100%", marginTop: "50px", display: "flex", justifyContent: "center" }}>
         <div style={{ width: "500px" }}>
           <ReactSelectComponent
              getVal={handleGetValue}
@@ -51,7 +51,7 @@ function PatientDashboardMain() {
             setSelectedOption={setSelectedOption}
           />
         </div>
-      </div>
+      </div> */}
       
         <div style={{width:"100%", display:"flex",marginTop:'100px', justifyContent:'center'}}>
 

@@ -1,0 +1,22 @@
+var k = {
+    address: "skjdfsk",
+bloodgroup: "o",
+dob: "2022-02-11T00:00:00.000Z",
+email: "testnine@gmail.com",
+emergencyFirstName: "test",
+emergencyLastName: "user",
+emergencyPhone: "6736826298",
+emergencyRelationship: "any",
+firstName: "test",
+gender: "male",
+height: 1,
+image: "profile_image/image_1644577262956.jpeg",
+isActive: true,
+lastName: "nine",
+maritalstatus: "single",
+name_prefix: "mr",
+phone: "7263727536",
+securityAnswer: "test",
+securityQuestion: "what is your date of birth?",
+weight: 78
+}

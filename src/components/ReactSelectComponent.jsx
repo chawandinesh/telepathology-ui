@@ -8,7 +8,22 @@ const ReactSelectComponent = ({options, selectedOption,setSelectedOption, getVal
   };
   getVal(value)
 
-  return <Select onInputChange={e => setValue(e)} value={selectedOption} onChange={handleChange} options={options} />;
+  return (
+    <Select
+      styles={{
+        option: (provided, state) => ({
+          ...provided,
+          borderBottom: "1px dotted pink",
+          color: state.isSelected ? "white" : "blue",
+          cursor: "pointer",
+        }),
+      }}
+      onInputChange={(e) => setValue(e)}
+      value={selectedOption}
+      onChange={handleChange}
+      options={options}
+    />
+  );
 };
 
 export default ReactSelectComponent;

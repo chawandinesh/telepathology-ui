@@ -88,3 +88,33 @@ export const getAllPathologists = async() => {
         url: `${api_url}/pathologist/getPathologists`
     })
 }
+
+export const addService = (data) => {
+    return axios({
+        method: "POST",
+        url: `${api_url}/service/addService`,
+        data: data
+    })
+}
+
+export const getPatientServiceById = async(id, status) => {
+    return await axios({
+        method: "GET",
+        url: `${api_url}/service/getPatientService?id=${id}&status=${status}`
+    })
+}
+
+export const getPathologistServiceById = async(id, status) => {
+    return await axios({
+        method: "GET",
+        url: `${api_url}/service/getPathologistService?id=${id}&status=${status}`
+    })
+}
+
+export const updateServiceById = async(data) => {
+    return await axios({
+        method: "PUT",
+        url: `${api_url}/service/updateServiceById`,
+        data: data
+    })
+}

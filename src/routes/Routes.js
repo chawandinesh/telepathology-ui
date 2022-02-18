@@ -21,6 +21,8 @@ import PathologistsRequests from '../screens/pathologist/requests/PathologistsRe
 import PatientsList from '../screens/pathologist/patientsList/PatientsList'
 import PatientProfile from "../screens/profile/PatientProfile";
 import PathologistProfile from '../screens/profile/PathologistProfile'
+import Consult from "../screens/patient/consult/Consult";
+import ConsultRequests from "../screens/pathologist/consult-requests/ConsultRequests.jsx";
 const AppRoutes = () => {
   const PatientRoute = ({ children }) => {
     if (isLoginSuccess()) {
@@ -41,32 +43,39 @@ const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-
-      <Route
+        <Route
           path="/pathologst/dashboard"
           element={
             <PathologistRoute>
-                <Main />
+              <Main />
             </PathologistRoute>
           }
         />
-          <Route
+        <Route
           path="/pathologst/diagnosis-requests"
           element={
             <PathologistRoute>
-               <PathologistsRequests/>
+              <PathologistsRequests />
             </PathologistRoute>
           }
         />
-           <Route
+        <Route
           path="/pathologst/patients-list"
           element={
             <PathologistRoute>
-               <PatientsList/>
+              <PatientsList />
             </PathologistRoute>
           }
         />
-           <Route
+        <Route
+          path="/pathologist/consult-requests"
+          element={
+            <PathologistRoute>
+              <ConsultRequests/>
+            </PathologistRoute>
+          }
+        />
+        <Route
           path="/pathologist/profile"
           element={
             <PathologistRoute>
@@ -74,7 +83,7 @@ const AppRoutes = () => {
             </PathologistRoute>
           }
         />
-          <Route
+        <Route
           path="/patient/profile"
           element={
             <PatientRoute>
@@ -100,12 +109,21 @@ const AppRoutes = () => {
         />
 
         <Route
-            path="/patient/dashboard/results-reports"
-            element={
-              <PatientRoute>
-                <ResultsReports />
-              </PatientRoute>
-            }
+          path="/patient/dashboard/results-reports"
+          element={
+            <PatientRoute>
+              <ResultsReports />
+            </PatientRoute>
+          }
+        />
+
+        <Route
+          path="/patient/dashboard/consult"
+          element={
+            <PatientRoute>
+              <Consult />
+            </PatientRoute>
+          }
         />
 
         <Route
@@ -116,7 +134,7 @@ const AppRoutes = () => {
             </PatientRoute>
           }
         />
-         {/* <Route
+        {/* <Route
           path="/pathologist/dashboard"
           element={
             // <PathologistRoute>

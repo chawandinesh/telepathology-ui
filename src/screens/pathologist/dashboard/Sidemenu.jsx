@@ -2,7 +2,7 @@ import React from "react";
 import "./Sidemenu.css";
 import cube from "../../../assets/images/3d-cube.png";
 import friend from "../../../assets/images/add-friend.png";
-import chart from "../../../assets/images/bar-chart.png";
+import pencil from "../../../assets/images/pencil.png";
 import chat from "../../../assets/images/chat.png";
 import list from "../../../assets/images/list.png";
 import logout from "../../../assets/images/logout.png";
@@ -64,6 +64,15 @@ const Sidemenu = () => {
                 }: {}} ></img>
               </a>
             </li>
+            <li className="sidemenu-li"  style={{cursor:'pointer'}}  onClick={() => navigate("/pathologist/consult-requests")} >
+              <a>
+                <img src={pencil} className="side-icons" style={ pathName ==="/pathologist/consult-requests" ? {
+                  backgroundColor: "white",
+                  padding: "5px",
+                  width: "50px",
+                }: {}} ></img>
+              </a>
+            </li>
             {/* <li className="sidemenu-li">
               <a href="#">
                 <img src={chart} className="side-icons"></img>
@@ -78,23 +87,13 @@ const Sidemenu = () => {
                 }: {}} ></img>
               </a>
             </li>
-            {/* <li className="sidemenu-li">
-              <a href="#">
-                <img src={chart} className="side-icons"></img>
-              </a>
-            </li>
-            <li className="sidemenu-li">
-              <a href="#">
-                <img src={setting} className="side-icons"></img>
-              </a>
-            </li> */}
           </ul>
         </div>
         <div className="sidemenu-lower-content d-flex justify-content-end">
           <ul className="Navbar-nav menu">
             <li className="sidemenu-li" onClick={() => {
               window.localStorage.clear()
-              navigate("/pathologist/login")
+              navigate("/")
             }}>
               <a href="#">
                 <img src={logout} className="side-icons"></img>

@@ -1,0 +1,10 @@
+.add__consult {
+    border-color: #66FCF1;
+    color: #66FCF1;
+}
+
+.add__consult:hover {
+    border-color: #89e4de;
+    background-color: #66FCF1 !important;
+    color: #000 !important
+}

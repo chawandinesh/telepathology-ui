@@ -62,6 +62,12 @@ const PatientDashboard = ({ navigation, children }) => {
                 path: "/patient/dashboard/diagnosiscomments",
               },
               {
+                name: "Consult",
+                selected: true,
+                icon: <FaWpforms />,
+                path: "/patient/dashboard/consult",
+              },
+              {
                 name: "Profile",
                 selected: true,
                 icon: <FaUser />,
@@ -113,7 +119,8 @@ const PatientDashboard = ({ navigation, children }) => {
   const handleLogout = () => {
     window.localStorage.clear();
     setTimeout(() => {
-      window.location.reload();
+      location.href = '/'
+      // window.location.reload();
     }, 200);
   };
 
