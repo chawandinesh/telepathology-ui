@@ -118,7 +118,6 @@ const PathologistDashboard = ({ navigation, children }) => {
     ProfileImage.append("data", JSON.stringify({ _id: _.get(user, "_id"), oldimage: _.get(user,"image") }));
     updatePatient(ProfileImage)
       .then((res) => {
-        console.log(res, "res...");
         setState({
           ...state,
           show: true,

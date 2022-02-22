@@ -19,7 +19,6 @@ import { pathologistRegister } from "../../../helpers/helpers";
 
 function PathologistRecordEntry() {
   const [file, setFile] = useState(null);
-  console.log(file,'file')
   const patientRegisterSchema = yup.object().shape({
     firstName: yup.string().required("First name is required"),
     lastName: yup.string().required("Last name is required"),
@@ -159,7 +158,6 @@ function PathologistRecordEntry() {
   useEffect(() => {
     reset({ gender: "male", name_prefix: "mr" });
   }, []);
-  console.log(file,'file')
 
   const formData = new FormData();
 
@@ -168,7 +166,6 @@ function PathologistRecordEntry() {
       formData.append("image", file);
     }
     formData.append("data", JSON.stringify(e));
-   console.log(e)
    pathologistRegister(formData).then(res => {
      console.log(res,'res...')
    })

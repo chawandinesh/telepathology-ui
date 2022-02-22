@@ -27,3 +27,44 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.dashboard__main__content {
+    height: 85%;
+    width: 100%;
+    display: flex;
+    overflow-y: auto;
+    /* background-color: bisque; */
+}
+.dashboard__main__one {
+    height: 100%;
+    width: 40%
+}
+
+.dashboard__main__two {
+    height: 100%;
+    width: 60%
+}
+
+.dashboard__main__oneA {
+    height: 60%;
+    /* width: 50%; */
+    /* background-color: #534; */
+}
+
+.dashboard__main__oneB {
+    height: 40%;
+    /* width: 50%; */
+    /* background-color: rgb(51, 85, 75); */
+}
+
+.dashboard__main__twoA {
+    height: 100%;
+    /* width: 50%; */
+    /* background-color: rgb(46, 54, 78); */
+}
+
+/* .dashboard__main__twoB {
+    height: 10%;
+    background-color: rgb(23, 36, 23);
+} */
+

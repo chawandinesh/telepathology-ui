@@ -30,7 +30,6 @@ const Login = () => {
   } = useForm({ resolver: yupResolver(LoginSchema) });
 
   const onSubmit = (e) => {
-    console.log(e, "data");
     setLoginError(false)
     setLoginLoading(true)
     pathologistLogin(e)

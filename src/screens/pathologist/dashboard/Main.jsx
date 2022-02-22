@@ -22,7 +22,6 @@ const Main = () => {
   const [patients, setPatients] = useState([])
   // Donut chart
   const date = moment(new Date()).format("DD-MMM-YYYY")
-  console.log(date,'date...')
   // analytics chart
   const data = [
     { name: "Mon", uv: 400, pv: 2400, amt: 2400 },
@@ -47,7 +46,6 @@ const Main = () => {
 
   const getAllPatientsData = () => {
     getAllPatients().then(res => {
-      // console.log(_.get(res,'data.data'),'res...')
       setPatients(_.get(res,'data.data',''))
     })
   }
@@ -56,12 +54,10 @@ const Main = () => {
     getAllPatientsData()
   }, [])
   
-  console.log(patients)
   const getpatientsBasedOnGender = (gender) => _.filter(patients,each => _.get(each,'gender') === gender)
   const percentageOfGender =(gender)=> (getpatientsBasedOnGender(gender).length/patients.length) * 100
 
   // const newPatients = patients.map(e => moment(e).format("DD-MMM-YYYY"))
-  // console.log(newPatients,date)
   const getPatientsAccordingToJoined = (type) => {
     if(type==="new"){
      const newP =  patients.filter(e => moment(e).format("DD-MMM-YYYY") === date)
@@ -125,12 +121,12 @@ const Main = () => {
                   <Pie
                     data={[
                       {
-                        name: "Group A",
+                        name: "Male",
                         value: getpatientsBasedOnGender('male').length,
                         fill:"#45afa0",
                       },
                       {
-                        name: "Group B",
+                        name: "Female",
                         value: getpatientsBasedOnGender("female").length,
                         fill:"#6fcd9d"
                       },

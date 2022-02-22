@@ -55,7 +55,6 @@ function Consult() {
   //   { value: "doctor2", label: "Doctor2" },
   //   { value: "doctor3", label: "Doctor3" },
   // ];
-  //   console.log(selectedOption,'selected')
   const handleGetValue = (value) => {
     setValue(value);
   };
@@ -74,11 +73,9 @@ function Consult() {
   useEffect(() => {
     getPatientServiceById(_.get(JSON.parse(localStorage.getItem("user")), "_id", ""), status)
       .then((response) => {
-        console.log(response);
         setServices(_.get(response, "data.data", ""));
       })
       .catch((err) => {
-        console.log(err);
       });
   }, [status]);
 

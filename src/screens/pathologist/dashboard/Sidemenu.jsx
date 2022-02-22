@@ -26,7 +26,6 @@ import { useNavigate } from "react-router-dom";
 const Sidemenu = () => {
   const pathName = window.location.pathname
   const navigate = useNavigate()
-  console.log(pathName)
   return (
     <div className="sidemenu-wrapper vh-100">
       <div className="d-flex justify-content-between vh-100 icon-div">

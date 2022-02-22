@@ -7,7 +7,6 @@ import ReactSelectComponent from "../../../components/ReactSelectComponent";
 
 function PathologistDashboardMain() {
   const [selectedOption, setSelectedOption] = useState(undefined);
-  console.log(selectedOption);
   const options = [
     { value: "doctor1", label: "Doctor1" },
     { value: "doctor2", label: "Doctor2" },

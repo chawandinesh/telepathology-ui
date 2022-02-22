@@ -19,7 +19,6 @@ const ConsultRequests = () => {
     info: {},
   });
   const id = _.get(JSON.parse(localStorage.getItem("user")), "_id", "");
-  console.log(id, "id..");
   const getPathologistService = () => {
     getPathologistServiceById(id, "Pending").then((res) => {
       setRequests(_.get(res, "data.data", ""));
@@ -31,18 +30,15 @@ const ConsultRequests = () => {
   
 
   const handleAccept = (data) => {
-    console.log(data)
     updateServiceById({
       "_id":_.get(data,'_id'),
       status: "Confirmed"
     }).then(res => {
-      console.log(res)
       setState({...state,show: true, message: "Confirmation Successful", type: "success"})
       setTimeout(() => {
         getPathologistService()
       }, 300);
     }).catch(err => {
-      console.log(err)
       setState({...state,show: true, message: "Confirmation Fail", type: "danger"})
     })
   }
@@ -52,10 +48,8 @@ const ConsultRequests = () => {
       "_id":_.get(data,'patient._id'),
       status: "Rejected"
     }).then(res => {
-      console.log(res)
       setState({...state,show: true, message: "Rejected Successful", type: "success"})
     }).catch(err => {
-      console.log(err)
       setState({...state,show: true, message: "Rejected Fail", type: "danger"})
     })
   }
@@ -82,7 +76,6 @@ const ConsultRequests = () => {
         <tbody>
           {_.size(requests) ? (
             _.map(requests, (e, idx) => {
-              console.log(e.time);
               const dateTime = `${moment(e.date).format("DD-MM-YYYY")} ${e.time}`;
               const name = `${_.get(e, "patient.firstName")} ${_.get(e, "patient.lastName")}`;
               return (

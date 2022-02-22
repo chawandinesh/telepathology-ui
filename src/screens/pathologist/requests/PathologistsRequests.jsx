@@ -32,7 +32,6 @@ const PathologistRequests = () => {
     show: false,
     info: {},
   });
- console.log(viewModal,'view')
   const [modalData, setModalData] = useState({
     show: false,
     info: {},
@@ -51,7 +50,6 @@ const PathologistRequests = () => {
       setPatients(onlyReportFiles);
     });
   };
-  console.log(patients, "lsfdj");
 
   useEffect(() => {
     getAllPatientsData();
@@ -65,7 +63,6 @@ const PathologistRequests = () => {
     patientFormData.append("data", JSON.stringify(_.get(viewModal,'info.all')))
     setViewModal({...viewModal,show:false})
     updatePatient(patientFormData).then(res => {
-      console.log(res,'res...')
       setStatus({
         show: true,
         type: "success",
@@ -89,7 +86,6 @@ const PathologistRequests = () => {
                         eachFile.filePath.indexOf(".")
                       );
                       const name = `sample_${fileName.slice(fileName.indexOf("_") + 1, fileName.indexOf("."))}`;
-                      console.log(name,'naem...')
                       return (
                         <div style={{display:'flex', justifyContent:'space-between', width:"240px"}}>
                           <div >

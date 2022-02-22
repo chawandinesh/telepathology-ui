@@ -191,26 +191,6 @@ const PatientDashboard = ({ navigation, children }) => {
         </div>
       </div>
       <div className="patient__dashboard__main">{children}</div>
-      {/* <ToastContainer position="top-end" className="p-3">
-        <Toast onClose={() => setSuccess(false)} bg="success" show={success} delay={3000} autohide>
-          <Toast.Header>
-            <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-            <strong className="me-auto">Success</strong>
-            <small className="text-muted">just now</small>
-          </Toast.Header>
-          <Toast.Body style={{ color: "#fff" }}>Successfully uploaded</Toast.Body>
-        </Toast>
-      </ToastContainer>
-      <ToastContainer position="top-end" className="p-3">
-        <Toast onClose={() => setError(false)} bg="danger" show={error} delay={3000} autohide>
-          <Toast.Header>
-            <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />
-            <strong className="me-auto">Failed</strong>
-            <small className="text-muted">just now</small>
-          </Toast.Header>
-          <Toast.Body style={{ color: "#fff" }}>Failed to upload</Toast.Body>
-        </Toast>
-      </ToastContainer> */}
       <ToastComponent state={state} setState={setState}/>
       <input type="file" accept="image/*" className="d-none" onChange={handleImageUpload} ref={profileImageRef} />
     </div>
