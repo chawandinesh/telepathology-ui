@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import MyImg from "../../../assets/images/alex.jpeg";
 import "./patientdashboardmain.css";
-import { baseUrl, getAllPathologists, getPatientServiceById, getUserData } from "../../../helpers/helpers";
+import { baseUrl, getAllPathologists, getPatientById, getPatientServiceById, getUserData } from "../../../helpers/helpers";
 import OneA from "./components/OneA";
 import { BsEye } from "react-icons/bs";
 import ModalComponent from "../../../components/ModalComponent";
@@ -128,9 +128,20 @@ function PatientDashboardMain() {
     //   console.log("result",res)
     // })
   }
+  const [currentUser, setCurrentUser] = useState({})
+
+  const getCurrentLoginUserData = () => {
+    const userId = _.get(getUserData(),'_id')
+    getPatientById(userId).then(res => {
+      setCurrentUser(_.get(res,'data.data',''))
+    }).catch((err) => {
+      console.log(err,'error');
+    })
+  }
   useEffect(() => {
     getListOfPathologists();
     getPatientServices()
+    getCurrentLoginUserData()
   }, []);
 
   return (
@@ -147,7 +158,7 @@ function PatientDashboardMain() {
           <div className="dashboard__main__oneB">
             <div  style={{backgroundColor: "#1F2833",marginLeft: "80px",height: 300, width: 400}}>
               <h3  className="pb-3 text-white">Total Uploaded Samples :</h3>
-              <h1 className="pb-3 text-white text-center p-3">54</h1>
+              <h1 className="pb-3 text-white text-center p-3">{_.get(currentUser,'reportFile',[]).length}</h1>
             </div>
           </div>
         </div>

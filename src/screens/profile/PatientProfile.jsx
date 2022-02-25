@@ -156,16 +156,69 @@ const PatientProfile = () => {
   
   return (
     <div className="upload__pathology__container">
-    <div className="dashboard__main__header">
-      <h3>Profile</h3>
-    </div>
-    <div style={{width: "95%",display:'flex',justifyContent:"flex-end"}}>
-      <button onClick={() => setModalData({...modalData,show: true})} className='btn' style={{color:"#fff", backgroundColor:"#1F2833",boxShadow: "rgb(153 153 153) 1px 2px 6px 4px"}}>
-        Edit Profile
-      </button>
-    </div>
-     <div className='user__container' style={{width: "100%", display:'flex', justifyContent:'center'}}>
-       <div className='user'>
+      <div className="dashboard__main__header">
+        <h3>Profile</h3>
+      </div>
+      <div style={{ width: "95%", display: "flex", justifyContent: "flex-end" }}>
+        <button
+          onClick={() => setModalData({ ...modalData, show: true })}
+          className="btn"
+          style={{ color: "#fff", backgroundColor: "#1F2833", boxShadow: "rgb(153 153 153) 1px 2px 6px 4px" }}
+        >
+          Edit Profile
+        </button>
+      </div>
+      <div className="user__container" style={{ width: "100%", display: "flex" }}>
+        <div className="left">
+          <div className="basic__details">
+            <span className="details__title">BASIC DETAILS</span>
+            <div className="profile__image__name">
+              <div className="profile__background">
+                {_.get(user, "image") ? (
+                  <img
+                    style={{ borderRadius: "50%", height: "100%", width: "100%" }}
+                    src={`${baseUrl}/${_.get(user, "image")}`}
+                    alt="profileimage"
+                  />
+                ) : (
+                  <img
+                    style={{ borderRadius: "50%", backgroundColor: "#fff", height: "100%", width: "100%" }}
+                    src={userImage}
+                    alt="profileimage"
+                  />
+                )}
+              </div>
+              <div className="profile__name__content">
+                <h3>
+                  {_.get(user, "firstName", "FName")} {_.get(user, "lastName", "LName")}
+                </h3>
+                <h5 className="text-white">{_.get(user, "ABHAHealthId", "")}</h5>
+              </div>
+            </div>
+            <div className="text-white " style={{ marginLeft: "50px", marginTop: "30px" }}>
+              <h5 className="p-2">Email: {_.get(user, "email", "")}</h5>
+              <h5 className="p-2">Phone: {_.get(user, "phone", "")}</h5>
+              <h5 className="p-2">address: {_.get(user, "address", "")}</h5>
+              {/* <h5 className="p-2">Email: {_.get(user,'email','')}</h5> */}
+            </div>
+          </div>
+        </div>
+        <div className="right">
+          {/* <div className='professional__details'>
+         <span className="details__title">PROFESSIONAL DETAILS</span>
+    
+         </div> */}
+          <div className="emergency__details">
+            <span className="details__title">EMERGENCY DETAILS</span>
+            <div className="text-white " style={{ marginLeft: "50px", marginTop: "30px" }}>
+              <h5 className="p-2">First Name: {_.get(user, "emergencyFirstName", "")}</h5>
+              <h5 className="p-2">Last Name: {_.get(user, "emergencyLastName", "")}</h5>
+              <h5 className="p-2">RelationShip: {_.get(user, "emergencyRelationship", "")}</h5>
+              <h5 className="p-2">Phone: {_.get(user, "emergencyPhone", "")}</h5>
+            </div>
+          </div>
+        </div>
+        {/* <div className='user'>
          <div style={{color:"#fff"}}>
            {
                _.get(user,'image') ?
@@ -185,10 +238,16 @@ const PatientProfile = () => {
             <p className='m-0 py-1'>Phone: {_.get(user,'phone')}</p>
 
           </div>
-       </div>
-     </div>
-     <ModalComponent hideSaveBtn  refVal={submitRef} modalData={modalData} setModalData={setModalData} title="Edit Profile" >
-     <div className="patient__form__container">
+       </div> */}
+      </div>
+      <ModalComponent
+        hideSaveBtn
+        refVal={submitRef}
+        modalData={modalData}
+        setModalData={setModalData}
+        title="Edit Profile"
+      >
+        <div className="patient__form__container">
           <form onSubmit={handleSubmit(onSubmit)}>
             {_.map(fields, (eachField) => {
               const { type, label, placeholder, name } = eachField;
@@ -239,7 +298,7 @@ const PatientProfile = () => {
                       register={register}
                     />
                   ) : eachField.type === "image" ? (
-                    <ImageUpload file={file} setFile={setFile} hidelabel={false} >
+                    <ImageUpload file={file} setFile={setFile} hidelabel={false}>
                       <div className="rounded-md shadow-lg" style={{ width: "100%", backgroundColor: "#c5c6c7" }}>
                         <div className="items-center p-4 m-4 text-center border-4 border-dotted w-96 h-96">
                           <p className="self-auto">Drag and drop (Or click to drop) a image file</p>
@@ -337,10 +396,10 @@ const PatientProfile = () => {
             </Button>
           </form>
         </div>
-     </ModalComponent>
-     <ToastComponent state={toastState} setState={setToastState}/>
+      </ModalComponent>
+      <ToastComponent state={toastState} setState={setToastState} />
     </div>
-  )
+  );
 }
 
 export default PatientProfile

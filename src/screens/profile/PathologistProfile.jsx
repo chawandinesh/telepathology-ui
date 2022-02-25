@@ -144,7 +144,84 @@ const PathologistProfile = () => {
         Edit Profile
       </button>
     </div>
-     <div className='user__container' style={{width: "100%", display:'flex', justifyContent:'center'}}>
+    <div className="user__container" style={{ width: "100%", display: "flex" }}>
+        <div className="left">
+          <div className="basic__details">
+            <span className="details__title">BASIC DETAILS</span>
+            <div className="profile__image__name">
+              <div className="profile__background">
+                {_.get(user, "image") ? (
+                  <img
+                    style={{ borderRadius: "50%", height: "100%", width: "100%" }}
+                    src={`${baseUrl}/${_.get(user, "image")}`}
+                    alt="profileimage"
+                  />
+                ) : (
+                  <img
+                    style={{ borderRadius: "50%", backgroundColor: "#fff", height: "100%", width: "100%" }}
+                    src={userImage}
+                    alt="profileimage"
+                  />
+                )}
+              </div>
+              <div className="profile__name__content">
+                <h3>
+                  {_.get(user, "firstName", "FName")} {_.get(user, "lastName", "LName")}
+                </h3>
+                <h5 style={{color:"#66fcf1"}}>{_.get(user, "ICMRregistrationId", "")}</h5>
+              </div>
+            </div>
+            <div className="text-white " style={{ marginLeft: "50px", marginTop: "30px" }}>
+              <h5 className="p-2">Email: <span style={{color:"#66fcf1"}}>{_.get(user, "email", "")}</span></h5>
+              <h5 className="p-2">Phone: <span style={{color:"#66fcf1"}}>{_.get(user, "phone", "")}</span></h5>
+              <h5 className="p-2">address: <span style={{color:"#66fcf1"}}>{_.get(user, "address", "")}</span></h5>
+            </div>
+          </div>
+        </div>
+        <div className="right">
+          <div className='professional__details'>
+         <span className="details__title">PROFESSIONAL DETAILS</span>
+         <div className="text-white " style={{ marginLeft: "50px", marginTop: "30px" }}>
+             <h5 className="p-2">ICMRregistrationID: <span style={{color:"#66fcf1"}}>{_.get(user, "ICMRregistrationId", "")}</span></h5>
+              <h5 className="p-2">Designation: <span style={{color:"#66fcf1"}}>{_.get(user, "designation", "")}</span></h5>
+              <h5 className="p-2">Experience: <span style={{color:"#66fcf1"}}>{_.get(user, "experience", "")}</span></h5>
+
+         </div>
+    
+         </div>
+          <div className="emergency__details">
+            <span className="details__title">EMERGENCY DETAILS</span>
+            <div className="text-white " style={{ marginLeft: "50px", marginTop: "30px" }}>
+              <h5 className="p-2">First Name: <span style={{color:"#66fcf1"}}>{_.get(user, "emergencyFirstName", "")}</span></h5>
+              <h5 className="p-2">Last Name: <span style={{color:"#66fcf1"}}>{_.get(user, "emergencyLastName", "")}</span></h5>
+              <h5 className="p-2">RelationShip: <span style={{color:"#66fcf1"}}>{_.get(user, "emergencyRelationship", "")}</span></h5>
+              <h5 className="p-2">Phone: <span style={{color:"#66fcf1"}}>{_.get(user, "emergencyPhone", "")}</span></h5>
+            </div>
+          </div>
+        </div>
+        {/* <div className='user'>
+         <div style={{color:"#fff"}}>
+           {
+               _.get(user,'image') ?
+               <img height="200px" width="200px" style={{borderRadius:"50%"}} src={`${baseUrl}/${_.get(user,'image')}`} alt="profileimage"/>
+  
+               :
+               <img height="200px" width="200px" style={{borderRadius:"50%",backgroundColor:"#fff"}} src={userImage} alt="profileimage"/>
+              
+           }
+         </div>
+          <div style={{color:"white", textAlign:'center'}}>
+            <h3 className='p-2'>{`${_.get(user,'firstName','')} ${_.get(user,'lastName','')} ` }</h3>
+            <p className='m-0 py-2'>{_.get(user,'email')}</p>
+            <p className='m-0 py-1'>ABHA ID: {_.get(user,'ABHAHealthId')}</p>
+            <p className='m-0 py-1'>DOB: {moment(_.get(user,'dob')).format("DD-MM-YYYY")}</p>
+            <p className='m-0 py-1'>Blood Group: {_.get(user,'bloodgroup')}</p>
+            <p className='m-0 py-1'>Phone: {_.get(user,'phone')}</p>
+
+          </div>
+       </div> */}
+      </div>
+     {/* <div className='user__container' style={{width: "100%", display:'flex', justifyContent:'center'}}>
        <div className='user'>
          <div style={{color:"#fff"}}>
            {
@@ -166,7 +243,7 @@ const PathologistProfile = () => {
 
           </div>
        </div>
-     </div>
+     </div> */}
      <ModalComponent hideSaveBtn  refVal={submitRef} modalData={modalData} setModalData={setModalData} title="Edit Profile" >
      <div className="patient__form__container">
           <form onSubmit={handleSubmit(onSubmit)}>

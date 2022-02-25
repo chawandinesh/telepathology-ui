@@ -7,7 +7,7 @@ const LandingSignin = () => {
   return (
     <div className="landing__container">
       <div className="landing__header">
-         <span>Telepathology</span>
+        <span>AI Based Telepathology</span> 
       </div>
       <hr className="landing__hr" />
       <div className="signin__container">

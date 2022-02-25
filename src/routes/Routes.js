@@ -28,7 +28,7 @@ const AppRoutes = () => {
     if (isLoginSuccess()) {
       return <PatientDashboard>{children}</PatientDashboard>;
     } else {
-      return <Navigate to={"/patient/login"} />;
+      return <Navigate to={"/"} />;
     }
   };
 
@@ -36,7 +36,7 @@ const AppRoutes = () => {
     if (isLoginSuccess()) {
       return <Dashboard>{children}</Dashboard>;
     } else {
-      return <Navigate to={"/pathologist/login"} />;
+      return <Navigate to={"/"} />;
     }
   };
 
