@@ -16,9 +16,10 @@ import {
   Pie,
 } from "recharts";
 import moment from 'moment'
-import { getAllPatients } from "../../../helpers/helpers";
+import { getAllPatients, getPathologistServiceById } from "../../../helpers/helpers";
 import _ from "lodash";
 const Main = () => {
+  const [patientsCount, setPatientsCount] = useState({old:[], new:[]})
   const [patients, setPatients] = useState([])
   // Donut chart
   const date = moment(new Date()).format("DD-MMM-YYYY")
@@ -29,6 +30,42 @@ const Main = () => {
     { name: "Wed", uv: 350, pv: 2400, amt: 2400 },
     { name: "Thu", uv: 380, pv: 2400, amt: 2400 },
   ];
+  const pathologistId = _.get(JSON.parse(localStorage.getItem("user")),'_id')
+  console.log(pathologistId,'id')
+
+  const getNewPatientsForCurrentPathologist = () => {
+    getPathologistServiceById(pathologistId,'Pending').then(res => {
+      console.log(res,'res..')
+    })
+  }
+
+  const getCompletedPatientsForCurrentPathologist = () => {
+    getPathologistServiceById(pathologistId,"Confirmed").then(res => {
+      console.log(res,'res..')
+    })
+  }
+
+  const getRejectedPatientsForCurrentPathologist = () => {
+    getPathologistServiceById(pathologistId,'Rejected').then(res => {
+      console.log(res,'res..')
+    })
+  }
+
+  useEffect(() => {
+    Promise.all([getPathologistServiceById(pathologistId,'Pending'),getPathologistServiceById(pathologistId,'Confirmed'),getPathologistServiceById(pathologistId,'Rejected')]).then(res => {
+      const data = res.map(e => _.get(e,'data.data'));
+      const newData = _.unionBy(data[0].map(e => e.patient),(value) => value._id)
+      const oldData = _.unionBy([...data[1],...data[2]].map(e => e.patient),(value) => value._id)
+      setPatientsCount({
+        new: newData,
+        old: oldData
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+    
+  }, [])
+  console.log(patientsCount)
 
   const renderLineChart = (
     <LineChart
@@ -52,19 +89,20 @@ const Main = () => {
 
   useEffect(() => {
     getAllPatientsData()
+    
   }, [])
   
-  const getpatientsBasedOnGender = (gender) => _.filter(patients,each => _.get(each,'gender') === gender)
+  const getpatientsBasedOnGender = (gender) => _.filter([...patientsCount.new,...patientsCount.old],each => _.get(each,'gender') === gender)
   const percentageOfGender =(gender)=> (getpatientsBasedOnGender(gender).length/patients.length) * 100
 
   // const newPatients = patients.map(e => moment(e).format("DD-MMM-YYYY"))
   const getPatientsAccordingToJoined = (type) => {
     if(type==="new"){
-     const newP =  patients.filter(e => moment(e).format("DD-MMM-YYYY") === date)
-     return {count:newP.length, percentage: (newP.length/patients.length) * 100,list:newP}
+     const newP =  patientsCount.new
+     return {count:newP.length, percentage: ((newP.length/patients.length) * 100).toFixed(2),list:newP}
     }else if(type === "old"){
-      const oldP =  patients.filter(e => moment(e).format("DD-MMM-YYYY") !== date)
-      return {count:oldP.length, percentage: (oldP.length/patients.length) * 100,list:oldP}
+      const oldP =  patientsCount.old
+      return {count:oldP.length, percentage: ((oldP.length/patients.length) * 100).toFixed(2),list:oldP}
     }else{
       return []
     }
