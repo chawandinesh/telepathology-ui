@@ -23,6 +23,7 @@ import PatientProfile from "../screens/profile/PatientProfile";
 import PathologistProfile from '../screens/profile/PathologistProfile'
 import Consult from "../screens/patient/consult/Consult";
 import ConsultRequests from "../screens/pathologist/consult-requests/ConsultRequests.jsx";
+import ForgotPassword from "../screens/forgot-password/ForgotPassword";
 const AppRoutes = () => {
   const PatientRoute = ({ children }) => {
     if (isLoginSuccess()) {
@@ -144,6 +145,8 @@ const AppRoutes = () => {
         /> */}
         <Route path="/patient/registration" element={<PatientRecordEntry />} />
         <Route path="/pathologist/registration" element={<PathologistRecordEntry />} />
+        <Route path="/pathologist/forgot-password" element={<ForgotPassword />} />
+        <Route path="/patient/forgot-password" element={<ForgotPassword />} />
         <Route path="/pathologist/login" element={<PathologistLogin />} />
         <Route path="/patient/login" element={<PatientLogin />} />
         {/* <Route path="/pathologist/login" element={isLoginSuccess() ? <Navigate to="/patient/dashboard" /> : <PathologistLogin />} />

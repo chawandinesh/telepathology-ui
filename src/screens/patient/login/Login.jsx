@@ -70,10 +70,23 @@ const Login = () => {
           />
           <p className="text-danger text-start pl-3">{_.get(errors, "email.message", " ")}</p>
           <input type="password" name="password" placeholder="password" {...register("password")} />
+          <div className="forgot__password__container w-100 text-white d-flex justify-content-end">
+            <div>
+              Forgot password ?
+              <span
+                style={{ fontSize: 13, color: "#66fcf1", marginLeft: 10, cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/patient/forgot-password");
+                }}
+              >
+                Click here!
+              </span>
+            </div>
+          </div>
           <p className="text-danger text-start pl-3">{_.get(errors, "password.message", " ")}</p>
-          {loginError ? <p className="text-danger text-start pl-3">Invalid credentials</p>: null}
+          {loginError ? <p className="text-danger text-start pl-3">Invalid credentials</p> : null}
           <button className="mt-3 login-btn" type="submit">
-          {loginLoading ?  <Spinner  animation="border" /> : "Login" }
+            {loginLoading ? <Spinner animation="border" /> : "Login"}
           </button>
           <div className="w-100 justify-content-center d-flex align-items-center text-white mb-4 text-center mt-2">
             Don't have an account ?{" "}

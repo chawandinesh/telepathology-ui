@@ -118,3 +118,19 @@ export const updateServiceById = async(data) => {
         data: data
     })
 }
+
+export const pathologistPasswordChange = async(data) => {
+    return await axios({
+        method: "POST",
+        url: `${api_url}/pathologist/forgotPathologistPassword`,
+        data: data
+    })
+}
+
+export const patientPasswordChange = async(data) => {
+    return await axios({
+        method: "POST",
+        url: `${api_url}/patient/forgotPatientPassword`,
+        data: data
+    })
+}
