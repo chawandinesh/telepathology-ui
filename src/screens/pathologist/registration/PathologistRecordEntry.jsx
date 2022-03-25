@@ -16,9 +16,19 @@ import ImageUpload from "../../../components/ImageUpload";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { pathologistRegister } from "../../../helpers/helpers";
-
+import {useNavigate} from 'react-router-dom'
+import ToastComponent from "../../../components/ToastComponent";
 function PathologistRecordEntry() {
   const [file, setFile] = useState(null);
+  const [state, setState] = useState({
+    show: false,
+    type: "",
+    message: ""
+  })
+  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const [error, setError] = useState(false);
+  const [registerLoading, setRegisterLoading] = useState(false);
   const patientRegisterSchema = yup.object().shape({
     firstName: yup.string().required("First name is required"),
     lastName: yup.string().required("Last name is required"),
@@ -168,6 +178,22 @@ function PathologistRecordEntry() {
     formData.append("data", JSON.stringify(e));
    pathologistRegister(formData).then(res => {
      console.log(res,'res...')
+     setShow(true);
+     setError(false);
+     setRegisterLoading(false);
+     console.log(res, "res");
+     reset();
+     setState({
+      ...state,type: "success",message:"Successfully Registered", show: true
+    })
+     setTimeout(() => {
+       navigate("/patient/login");
+     }, 3000);
+     setFile(null);
+   }).catch((err) => {
+     setState({
+       ...state,type: "danger",message:"Faild to register", show: true
+     })
    })
     // postApi();
   };
@@ -359,6 +385,7 @@ function PathologistRecordEntry() {
           </form>
         </div>
       </div>
+      <ToastComponent state={state} setState={setState}/>
     </div>
   );
 }

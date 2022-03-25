@@ -26,36 +26,43 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 };
 
 const One = ({ services }) => {
+  console.log(services, "Services...");
   const servicesData = [
     { name: "Pending", value: _.size(_.filter(services, (each) => each.status === "Pending")), fill: "##ebb23f" },
-    { name: "Confirmed", value: _.size(_.filter(services, (each) => each.status === "Confirmed")) , fill: "#00C49F"},
+    { name: "Confirmed", value: _.size(_.filter(services, (each) => each.status === "Confirmed")), fill: "#00C49F" },
     { name: "Rejected", value: _.size(_.filter(services, (each) => each.status === "Rejected")), fill: "##ed4618" },
   ];
 
   return (
-    <div style={{backgroundColor: "#1F2833",marginLeft: "80px",height: 300, width: 400}}>
-      <h3 className="pb-3 text-white">
-        Consultancy status :
-      </h3>
-    <ResponsiveContainer width="100%" height="100%" >
-      <PieChart width={400} height={450}>
-        <Pie
-          data={servicesData}
-          cx="50%"
-          cy="34%"
-          label={renderCustomizedLabel}
-          outerRadius={100}
-          nameKey="name"
-          fill="#8884d8"
-          dataKey="value"
-        >
-          {data.map((entry, index) => {
-            return <Cell key={`cell-${index}`}  />;
-          })}
-        </Pie>
-        <Tooltip />
-      </PieChart>
-    </ResponsiveContainer>
+    <div style={{ backgroundColor: "#1F2833", marginLeft: "80px", height: 300, width: 400 }}>
+      <h3 className="pb-3 text-white">Consultancy status :</h3>
+      {services.length ? (
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart width={400} height={450}>
+            <Pie
+              data={servicesData}
+              cx="50%"
+              cy="34%"
+              label={renderCustomizedLabel}
+              outerRadius={100}
+              nameKey="name"
+              fill="#8884d8"
+              dataKey="value"
+            >
+              {data.map((entry, index) => {
+                return <Cell key={`cell-${index}`} />;
+              })}
+            </Pie>
+            <Tooltip />
+          </PieChart>
+        </ResponsiveContainer>
+      ) : (
+        <div className="h-50 w-100 d-flex justify-content-center align-item-center">
+          <p className="text-white" style={{ fontSize: 20 }}>
+            No serivices
+          </p>
+        </div>
+      )}
     </div>
   );
 };

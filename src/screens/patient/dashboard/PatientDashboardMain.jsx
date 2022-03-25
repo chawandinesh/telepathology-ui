@@ -124,9 +124,7 @@ function PatientDashboardMain() {
       setAllServices(_.flatMap(all))
 
     })
-    // getPatientServiceById(_.get(getUserData(),"_id",""), "Pending").then(res => {
-    //   console.log("result",res)
-    // })
+  
   }
   const [currentUser, setCurrentUser] = useState({})
 
@@ -166,12 +164,15 @@ function PatientDashboardMain() {
          <h3  className="pb-3 ml-4 text-white" style={{marginLeft: "80px"}}>Pathologists :</h3>
          <div className="dashboard__main__twoA" style={{overflowY: 'auto'}}>
          {pathologistList.map(e => {
+          //  return <div>sf</div>
            return <PathologistItem pathologist={e}/>
          })}
          </div>
         </div>
 
       </div>
+      {
+        modalData.show &&
              <ModalComponent title="Pathologist Details" hideSaveBtn modalData={modalData} setModalData={setModalData} >
             <div style={{width:"auto", height: "auto"}}>
 
@@ -214,6 +215,7 @@ function PatientDashboardMain() {
   
             </div>
         </ModalComponent>
+      }
    
     </div>
   );
