@@ -83,6 +83,7 @@ const PathologistClassification = () => {
       return(
     <div>
        {_.map(_.get(e, "classificationFile"), (eachFile) => {
+           console.log(eachFile)
                       const fileName = eachFile.filePath.slice(
                         eachFile.filePath.indexOf("/") + 1,
                         eachFile.filePath.indexOf(".")
@@ -98,7 +99,7 @@ const PathologistClassification = () => {
     
                             <FaEye
                               style={{ cursor: "pointer", marginLeft: "10px" }}
-                              onClick={() => setViewModal({ ...viewModal, show: true, info: {all:e,file:eachFile} })}
+                              onClick={() => setViewModal({ ...viewModal, show: true, info: {all:e,file:eachFile, class: eachFile.Model_Prediction} })}
                             />
                           </div>
                        
@@ -152,7 +153,7 @@ const PathologistClassification = () => {
         </tbody>
       </Table>
 
-      <ModalComponent handleSubmit={handleSubmit}  title="Sample Details" modalData={viewModal} setModalData={setViewModal}>
+      <ModalComponent handleSubmit={handleSubmit}  title={viewModal.info.class} modalData={viewModal} setModalData={setViewModal}>
         <div style={{ width: "80%", height: "80%", display: "flex", justifyContent: "center", alignItems: "center" }}>
           <img src={`${baseUrl}/${_.get(viewModal,"info.file.filePath")}`} width="100%" height="100%" alt="noimg" />
         </div>
