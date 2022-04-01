@@ -63,6 +63,13 @@ const PatientDashboard = ({ navigation, children }) => {
               },
 
               {
+                name: "Pathology Segmentation",
+                selected: true,
+                icon: <FaWpforms />,
+                path: "/patient/dashboard/pathology-segmentation",
+              },
+
+              {
                 name: "Diagnosis and Comments",
                 selected: true,
                 icon: <FaWpforms />,

@@ -6,13 +6,14 @@ import ImageUpload from "../../../components/ImageUpload";
 import ModalComponent from "../../../components/ModalComponent";
 import { addReportFile, baseUrl, getPathologistById, getPatientById, getUserData } from "../../../helpers/helpers";
 import _ from "lodash";
-import "./uploadpathology.css";
+import "../uploadpathology/uploadpathology.css";
 import ToastComponent from "../../../components/ToastComponent";
 import { storage } from "../../../firebase/firebase";
 import { getDownloadURL } from "firebase/storage";
-import TestImage from '../../../assets/images/testsample.png'
-const PathologySamples = () => {
+import TestImage from "../../../assets/images/testsample.png";
+const PathologySegmentation = () => {
   const [file, setFile] = useState(null);
+  const segmentRef = React.createRef();
   const [loading, setLoading] = useState(false);
   const [pathologyUpload, setPathologyUpload] = useState({ loading: false, image: null, error: false });
   const [currentUser, setCurrentUser] = useState(null);
@@ -30,6 +31,9 @@ const PathologySamples = () => {
     type: "",
     message: "",
   });
+  const [loadingShow, setLoadingShow] = useState(false);
+  const [loadingSuccess, setLoadingSuccess] = useState(false);
+
   const item = {
     uploadedDate: "12-02-2022",
     name: "Sample Image",
@@ -167,113 +171,58 @@ const PathologySamples = () => {
     uploadImageToFireStore(file);
   };
   const url = file ? URL.createObjectURL(file) : null;
+  const handleImage = (e) => {
+    setLoadingSuccess(false);
+    if (e.target.files[0]) {
+      setLoadingShow(true);
+      setTimeout(() => {
+        setLoadingShow(false);
+        setLoadingSuccess(true);
+      }, 20000);
+    }
+  };
+  const handleLoading = () => {
+    segmentRef.current.click();
+  };
 
   return (
     <div className="upload__pathology__container">
       <div className="dashboard__main__header">
-        <h3>Pathology Sample</h3>
-      </div>
-      <div className="w-100  d-flex justify-content-end" style={{ height: "13%" }}>
-        <button
-          className="btn  btn-primary"
-          style={{ marginRight: "30px", background: "black", borderColor: "#3F706E" }}
-          onClick={() => {
-            setModalData({ ...modalData, show: true, info: item });
-          }}
-        >
-          Upload Pathology sample
-        </button>
+        <h3>Pathology Segmentation</h3>
       </div>
 
-      <h4 className="text-white" style={{ paddingLeft: "20px", textDecoration: "underline" }}>
-        Previously uploaded samples :
-      </h4>
-      <Table striped bordered hover responsive variant="dark">
-        <thead>
-          <tr>
-            <th>#</th>
-            {/* <th>Uploaded Date</th> */}
-            <th>Name</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {_.size(_.get(currentUser, "reportFile", "")) ? (
-            _.map(_.get(currentUser, "reportFile"), (e, idx) => {
-              const fileName = e.filePath.slice(e.filePath.indexOf("/") + 1, e.filePath.indexOf("."));
-              const name = `sample_${fileName.slice(fileName.indexOf("_") + 1, fileName.indexOf("."))}`;
-              console.log(name);
-              return (
-                <tr>
-                  <td>{idx + 1}</td>
-                  {/* <td>{item.uploadedDate}</td> */}
-                  <td>{name}</td>
-                  <td>
-                    <FaEye
-                      style={{ cursor: "pointer" }}
-                      onClick={() => setViewModal({ ...viewModal, show: true, info: e })}
-                    />
-                  </td>
-                </tr>
-              );
-            })
-          ) : (
-            <h4 className="mt-3 text-center">No Samples found</h4>
-          )}
-        </tbody>
-      </Table>
-      <ModalComponent
-        title="Upload Sample Image"
-        modalData={modalData}
-        handleSubmit={postReportFile}
-        setModalData={setModalData}
-      >
-        {/* <h3 className="text-white">lskdjf</h3> */}
+      <div className="w-100  d-flex justify-content-center align-items-center flex-column">
+        <div>
+          <button
+            className="btn  btn-primary mt-4 mb-4"
+            style={{ marginRight: "30px", background: "black", borderColor: "#3F706E" }}
+            onClick={handleLoading}
+          >
+            Upload Pathology sample
+          </button>
+        </div>
+
         <div
-          style={{
-            height: "100%",
-            marginTop: 29,
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          style={{ height: "300px", width: "500px", border: "1px solid #fff" }}
+          className="d-flex justify-content-center align-items-center"
         >
-          <ImageUpload hidelabel={true} file={file} setFile={setFile} fileName={""}>
-            <div
-              style={{
-                width: "250px",
-                height: "180px",
-                border: "2px solid #3F706E",
-                textAlign: "center",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              {loading ? (
-                <h3>
-                  {" "}
-                  <Spinner animation="grow" variant="light" /> Loading..
-                </h3>
-              ) : url ? (
-                <img src={url} alt="noimage" height="100%" width="100%" />
-              ) : (
-                <span>Drag or upload the image</span>
-              )}
+          {loadingShow ? (
+            <div className="d-flex justify-content-center align-items-center">
+              <div className="p-2">
+                <Spinner animation="grow" variant="light" />
+              </div>
+              <h5 className="text-center text-white ml-2">Segmentation is Processing...</h5>
             </div>
-          </ImageUpload>
+          ) : loadingSuccess ? (
+            <img height="300px" width="500px" src={TestImage} />
+          ) : (
+            <p className="text-white">No Image</p>
+          )}
         </div>
-      </ModalComponent>
-      <ModalComponent hideSaveBtn title="Sample Details" modalData={viewModal} setModalData={setViewModal}>
-        <div style={{ width: "90%", height: "90%", display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <img src={`${baseUrl}/${viewModal.info.filePath}`} width="100%" height="100%" alt="noimg" />
-        </div>
-      </ModalComponent>
-      {pathologyUpload.error ? <p className="text-danger">Something went wrong</p> : null}
-      <ToastComponent setState={setState} state={state} />
+      </div>
+      <input type="file" className="d-none" accept="image/*" ref={segmentRef} onChange={handleImage} />
     </div>
   );
 };
 
-export default PathologySamples;
+export default PathologySegmentation;

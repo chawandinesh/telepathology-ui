@@ -26,6 +26,7 @@ import ConsultRequests from "../screens/pathologist/consult-requests/ConsultRequ
 import ForgotPassword from "../screens/forgot-password/ForgotPassword";
 import Welcome from "../Welcome";
 import PathologyClassification from '../screens/patient/uploadClassification/PathologyClassifications'
+import PathologySegmentation from "../screens/patient/uploadSegmentaion/PathologySegmentaion";
 const AppRoutes = () => {
   const PatientRoute = ({ children }) => {
     if (isLoginSuccess()) {
@@ -108,6 +109,14 @@ const AppRoutes = () => {
           element={
             <PatientRoute>
               <PathologySamples />
+            </PatientRoute>
+          }
+        />
+            <Route
+          path="/patient/dashboard/pathology-segmentation"
+          element={
+            <PatientRoute>
+              <PathologySegmentation />
             </PatientRoute>
           }
         />
