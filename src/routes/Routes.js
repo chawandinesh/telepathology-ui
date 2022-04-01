@@ -9,21 +9,23 @@ import PathologistRecordEntry from "../screens/pathologist/registration/Patholog
 import PatientDashboard from "../screens/patient/dashboard/PatientDashboard";
 import PatientDashboardMain from "../screens/patient/dashboard/PatientDashboardMain";
 import DiagnosisAndComments from "../screens/patient/diagnosisandcomments/DiagnosisAndComments";
-import PatientLogin from '../screens/patient/login/Login'
-import PathologistLogin from '../screens/pathologist/login/Login'
+import PatientLogin from "../screens/patient/login/Login";
+import PathologistLogin from "../screens/pathologist/login/Login";
 import PatientRecordEntry from "../screens/patient/registration/PatientRecordEntry";
 import ResultsReports from "../screens/patient/results-reports/ResultsReports";
 import PathologySamples from "../screens/patient/uploadpathology/PathologySamples";
 import UploadPathology from "../screens/patient/uploadpathology/UploadPathology";
 import Dashboard from "../screens/pathologist/dashboard/Dahboard";
 import Main from "../screens/pathologist/dashboard/Main";
-import PathologistsRequests from '../screens/pathologist/requests/PathologistsRequests'
-import PatientsList from '../screens/pathologist/patientsList/PatientsList'
+import PathologistsRequests from "../screens/pathologist/requests/PathologistsRequests";
+import PatientsList from "../screens/pathologist/patientsList/PatientsList";
 import PatientProfile from "../screens/profile/PatientProfile";
-import PathologistProfile from '../screens/profile/PathologistProfile'
+import PathologistProfile from "../screens/profile/PathologistProfile";
 import Consult from "../screens/patient/consult/Consult";
 import ConsultRequests from "../screens/pathologist/consult-requests/ConsultRequests.jsx";
 import ForgotPassword from "../screens/forgot-password/ForgotPassword";
+import Welcome from "../Welcome";
+import PathologyClassification from '../screens/patient/uploadClassification/PathologyClassifications'
 const AppRoutes = () => {
   const PatientRoute = ({ children }) => {
     if (isLoginSuccess()) {
@@ -44,6 +46,15 @@ const AppRoutes = () => {
   return (
     <Router>
       <Routes>
+      <Route
+          path="/welcome"
+          element={
+            // <PathologistRoute>
+              <Welcome />
+            // </PathologistRoute>
+          }
+        />
+
         <Route
           path="/pathologst/dashboard"
           element={
@@ -72,7 +83,7 @@ const AppRoutes = () => {
           path="/pathologist/consult-requests"
           element={
             <PathologistRoute>
-              <ConsultRequests/>
+              <ConsultRequests />
             </PathologistRoute>
           }
         />
@@ -97,6 +108,14 @@ const AppRoutes = () => {
           element={
             <PatientRoute>
               <PathologySamples />
+            </PatientRoute>
+          }
+        />
+        <Route
+          path="/patient/dashboard/pathology-classification"
+          element={
+            <PatientRoute>
+              <PathologyClassification />
             </PatientRoute>
           }
         />
@@ -154,7 +173,7 @@ const AppRoutes = () => {
         {/* <Route path="/" element={<Navigate to={isLoginSuccess() ? "/patient/dashboard" : "/patient/login"} />} /> */}
         <Route path="/landing/signin" element={<LandingSignin />} />
         <Route path="/landing/signup" element={<LandingSignup />} />
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<Welcome />} />
       </Routes>
     </Router>
   );

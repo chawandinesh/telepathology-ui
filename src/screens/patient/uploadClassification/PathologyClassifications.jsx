@@ -4,14 +4,15 @@ import { FaEye } from "react-icons/fa";
 import SImg from "../../../assets/images/recovered.png";
 import ImageUpload from "../../../components/ImageUpload";
 import ModalComponent from "../../../components/ModalComponent";
-import { addReportFile, baseUrl, getPathologistById, getPatientById, getUserData } from "../../../helpers/helpers";
+import { addClassificationFile, addReportFile, baseUrl, getPathologistById, getPatientById, getUserData } from "../../../helpers/helpers";
 import _ from "lodash";
-import "./uploadpathology.css";
+import "./uploadClassification.css";
 import ToastComponent from "../../../components/ToastComponent";
 import { storage } from "../../../firebase/firebase";
 import { getDownloadURL } from "firebase/storage";
+import axios from "axios";
 
-const PathologySamples = () => {
+const PahologyClassification = () => {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [pathologyUpload, setPathologyUpload] = useState({ loading: false, image: null, error: false });
@@ -82,7 +83,7 @@ const PathologySamples = () => {
 
   const uploadImageToFireStore = (uploadImage) => {
     setLoading(true);
-    const uploadTask = storage.ref(`image`).put(uploadImage);
+    const uploadTask = storage.ref(`newimage.png`).put(uploadImage);
     // .getDownloadURL()
     // console.log(uploadTask);
     uploadTask.on(
@@ -109,24 +110,18 @@ const PathologySamples = () => {
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
           // console.log("File available at", downloadURL);
-          const url = "https://histolog-segmenter.herokuapp.com/send-image/";
+          const url = "https://breast--cancer--classification.herokuapp.com/send-image/";
           if (downloadURL) {
             setPathologyUpload({ loading: true, image: null, error: false });
-            await fetch(url)
+            await axios.get(url)
               .then((res) => {
                 setPathologyUpload({ loading: false, image: res, error: false });
-                //  toDataURL(res.u)
-                // https://histolog-segmenter.herokuapp.com/send-image/
-                toDataURL(res.url).then((dataUrl) => {
-                  console.log("Here is Base64 Url", dataUrl);
-                  var file = dataURLtoFile(dataUrl, "imageName.jpg");
-                  console.log("Here is JavaScript File Object", file);
-                  //      fileArr.push(fileData)
-
-                  setModalData({ ...modalData, show: false });
-                  formData.append("reportFile", file);
-                  formData.append("data", JSON.stringify({ _id: _.get(getUserData(), "_id", "") }));
-                  addReportFile(formData)
+                console.log(res.data,'result...')
+                if(res.data){
+                    setModalData({ ...modalData, show: false })
+                    formData.append("classificationFile", file);
+                    formData.append("data",JSON.stringify({ _id: _.get(getUserData(), "_id", "") , ...res.data}))
+                    addClassificationFile(formData)
                     .then((res) => {
                       setFile(null);
                       setLoading(false);
@@ -148,7 +143,36 @@ const PathologySamples = () => {
                         message: "Failed to upload",
                       });
                     });
-                });
+
+                }
+                // setModalData({ ...modalData, show: false });
+                //   formData.append("reportFile", file);
+                //   formData.append("data", JSON.stringify({ _id: _.get(getUserData(), "_id", "") }));
+                //   addReportFile(formData)
+                //     .then((res) => {
+                //       setFile(null);
+                //       setLoading(false);
+                //       setState({
+                //         ...state,
+                //         type: "success",
+                //         show: true,
+                //         message: "successfully uploaded",
+                //       });
+                //       getCurrentLoginUserData();
+                //     })
+                //     .catch((err) => {
+                //       console.log(err);
+                //       setLoading(false);
+                //       setState({
+                //         ...state,
+                //         type: "danger",
+                //         show: true,
+                //         message: "Failed to upload",
+                //       });
+                //     });
+                
+
+                 
               })
               .catch((err) => {
                 console.log(err);
@@ -171,7 +195,7 @@ const PathologySamples = () => {
   return (
     <div className="upload__pathology__container">
       <div className="dashboard__main__header">
-        <h3>Pathology Sample</h3>
+        <h3>Pathology Histology</h3>
       </div>
       <div className="w-100  d-flex justify-content-end" style={{ height: "13%" }}>
         <button
@@ -181,33 +205,34 @@ const PathologySamples = () => {
             setModalData({ ...modalData, show: true, info: item });
           }}
         >
-          Upload Pathology sample
+          Upload patient histology
         </button>
       </div>
 
       <h4 className="text-white" style={{ paddingLeft: "20px", textDecoration: "underline" }}>
-        Previously uploaded samples :
+        Previously uploaded histologies :
       </h4>
       <Table striped bordered hover responsive variant="dark">
         <thead>
-          <tr>
+          <tr className="text-center">
             <th>#</th>
             {/* <th>Uploaded Date</th> */}
             <th>Name</th>
+            <th>Class</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {_.size(_.get(currentUser, "reportFile", "")) ? (
-            _.map(_.get(currentUser, "reportFile"), (e, idx) => {
+          {_.size(_.get(currentUser, "classificationFile", "")) ? (
+            _.map(_.get(currentUser, "classificationFile"), (e, idx) => {
               const fileName = e.filePath.slice(e.filePath.indexOf("/") + 1, e.filePath.indexOf("."));
-              const name = `sample_${fileName.slice(fileName.indexOf("_") + 1, fileName.indexOf("."))}`;
-              console.log(name);
+              const name = `histology_${fileName.slice(fileName.indexOf("_") + 1, fileName.indexOf("."))}`;
+              console.log(e,'evalue');
               return (
-                <tr>
-                  <td>{idx + 1}</td>
-                  {/* <td>{item.uploadedDate}</td> */}
+                <tr className="text-center">
+                  <td >{idx + 1}</td>
                   <td>{name}</td>
+                  <td >{_.get(e,"Model_Prediction","")}</td>
                   <td>
                     <FaEye
                       style={{ cursor: "pointer" }}
@@ -264,6 +289,10 @@ const PathologySamples = () => {
             </div>
           </ImageUpload>
         </div>
+        {/* <div className="d-flex justify-content-center align-items-center">
+             <p></p>
+              <input />
+        </div> */}
       </ModalComponent>
       <ModalComponent hideSaveBtn title="Sample Details" modalData={viewModal} setModalData={setViewModal}>
         <div style={{ width: "90%", height: "90%", display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -276,4 +305,4 @@ const PathologySamples = () => {
   );
 };
 
-export default PathologySamples;
+export default PahologyClassification;

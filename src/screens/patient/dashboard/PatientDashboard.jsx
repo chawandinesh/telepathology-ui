@@ -6,17 +6,17 @@ import { FaWpforms, FaLaptopMedical, FaSignOutAlt, FaUser } from "react-icons/fa
 import { BsFileSpreadsheet } from "react-icons/bs";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
-import {  getPatientById, baseUrl, updatePatient } from "../../../helpers/helpers";
+import { getPatientById, baseUrl, updatePatient } from "../../../helpers/helpers";
 import ToastComponent from "../../../components/ToastComponent";
 
 const profileImageRef = React.createRef();
 const PatientDashboard = ({ navigation, children }) => {
   // const [pathologySample, setPathologySample] = useState(second);
-  
+
   const [state, setState] = useState({
     show: false,
-    message:"",
-    type: "success"
+    message: "",
+    type: "success",
   });
   const [user, setUser] = useState(null);
 
@@ -24,14 +24,15 @@ const PatientDashboard = ({ navigation, children }) => {
   const location = useLocation();
 
   const getUserData = () => {
-    const userId = JSON.parse(localStorage.getItem("user"))
-    getPatientById(_.get(userId,"_id")).then(res => {
-      setUser(_.get(res,"data.data",""));
-    }).catch((err) => {
-      console.log(err);
-    })
-  }
-
+    const userId = JSON.parse(localStorage.getItem("user"));
+    getPatientById(_.get(userId, "_id"))
+      .then((res) => {
+        setUser(_.get(res, "data.data", ""));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const getProifleImage = () => {
     if (user?.image) {
@@ -41,7 +42,6 @@ const PatientDashboard = ({ navigation, children }) => {
     }
   };
 
- 
   const SideBarMenuItems = () => (
     <div className="middle">
       <div className="list__container">
@@ -55,6 +55,13 @@ const PatientDashboard = ({ navigation, children }) => {
                 icon: <FaWpforms />,
                 path: "/patient/dashboard/pathology-sample",
               },
+              {
+                name: "Pathology classification",
+                selected: true,
+                icon: <FaWpforms />,
+                path: "/patient/dashboard/pathology-classification",
+              },
+
               {
                 name: "Diagnosis and Comments",
                 selected: true,
@@ -77,7 +84,7 @@ const PatientDashboard = ({ navigation, children }) => {
               //   name: "View results and report",
               //   selected: false,
               //   icon: <BsFileSpreadsheet />,
-              //   path: "/patient/dashboard/results-reports",  
+              //   path: "/patient/dashboard/results-reports",
               // },
               // {
               //   name: "Recommendations",
@@ -128,17 +135,17 @@ const PatientDashboard = ({ navigation, children }) => {
 
   const handleImageUpload = (e) => {
     ProfileImage.append("image", e.target.files[0]);
-    ProfileImage.append("data", JSON.stringify({ _id: _.get(user, "_id"), oldimage: _.get(user,"image") }));
+    ProfileImage.append("data", JSON.stringify({ _id: _.get(user, "_id"), oldimage: _.get(user, "image") }));
     updatePatient(ProfileImage)
       .then((res) => {
         console.log(res, "res...");
         setState({
           ...state,
           show: true,
-          message:"Successfully updated",
-          type: "success"
-        })
-        getUserData()
+          message: "Successfully updated",
+          type: "success",
+        });
+        getUserData();
       })
       .catch((err) => {
         console.log(err);
@@ -146,9 +153,8 @@ const PatientDashboard = ({ navigation, children }) => {
   };
 
   useEffect(() => {
-     getUserData()
+    getUserData();
   }, []);
-  
 
   return (
     <div className="patient__dashboard">
@@ -172,7 +178,7 @@ const PatientDashboard = ({ navigation, children }) => {
               </div>
             </div>
             <div className="profile__name">
-              <h5>{`${_.get(user, "firstName","")} ${_.get(user, "lastName","")}`}</h5>
+              <h5>{`${_.get(user, "firstName", "")} ${_.get(user, "lastName", "")}`}</h5>
               <span>{_.get(user, "ABHAHealthId", "")}</span>
             </div>
           </div>
@@ -191,7 +197,7 @@ const PatientDashboard = ({ navigation, children }) => {
         </div>
       </div>
       <div className="patient__dashboard__main">{children}</div>
-      <ToastComponent state={state} setState={setState}/>
+      <ToastComponent state={state} setState={setState} />
       <input type="file" accept="image/*" className="d-none" onChange={handleImageUpload} ref={profileImageRef} />
     </div>
   );

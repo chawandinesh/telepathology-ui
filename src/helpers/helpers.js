@@ -53,6 +53,14 @@ export const addReportFile = async(data) => {
     }).then(res => res)
 }
 
+export const addClassificationFile = async(data) => {
+    return axios({
+        method:"POST",
+        url:`${api_url}/patient/addClassificationFile`,
+        data: data
+    }).then(res => res)
+}
+
 export const updatePatient = async(data) => {
     return axios({
         method:"PUT",
