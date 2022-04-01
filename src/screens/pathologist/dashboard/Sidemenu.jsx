@@ -63,6 +63,15 @@ const Sidemenu = () => {
                 }: {}} ></img>
               </a>
             </li>
+            <li className="sidemenu-li"  style={{cursor:'pointer'}}  onClick={() => navigate("/pathologst/classification")} >
+              <a>
+                <img src={list} className="side-icons" style={ pathName ==="/pathologst/classification" ? {
+                  backgroundColor: "white",
+                  padding: "5px",
+                  width: "50px",
+                }: {}} ></img>
+              </a>
+            </li>
             <li className="sidemenu-li"  style={{cursor:'pointer'}}  onClick={() => navigate("/pathologist/consult-requests")} >
               <a>
                 <img src={pencil} className="side-icons" style={ pathName ==="/pathologist/consult-requests" ? {

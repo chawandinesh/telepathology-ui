@@ -25,8 +25,9 @@ import Consult from "../screens/patient/consult/Consult";
 import ConsultRequests from "../screens/pathologist/consult-requests/ConsultRequests.jsx";
 import ForgotPassword from "../screens/forgot-password/ForgotPassword";
 import Welcome from "../Welcome";
-import PathologyClassification from '../screens/patient/uploadClassification/PathologyClassifications'
+import PathologyClassification from "../screens/patient/uploadClassification/PathologyClassifications";
 import PathologySegmentation from "../screens/patient/uploadSegmentaion/PathologySegmentaion";
+import PathologistClassification from "../screens/pathologist/pathologistClassification/PathologistClassification";
 const AppRoutes = () => {
   const PatientRoute = ({ children }) => {
     if (isLoginSuccess()) {
@@ -47,11 +48,11 @@ const AppRoutes = () => {
   return (
     <Router>
       <Routes>
-      <Route
+        <Route
           path="/welcome"
           element={
             // <PathologistRoute>
-              <Welcome />
+            <Welcome />
             // </PathologistRoute>
           }
         />
@@ -69,6 +70,14 @@ const AppRoutes = () => {
           element={
             <PathologistRoute>
               <PathologistsRequests />
+            </PathologistRoute>
+          }
+        />
+        <Route
+          path="/pathologst/classification"
+          element={
+            <PathologistRoute>
+              <PathologistClassification />
             </PathologistRoute>
           }
         />
@@ -112,7 +121,7 @@ const AppRoutes = () => {
             </PatientRoute>
           }
         />
-            <Route
+        <Route
           path="/patient/dashboard/pathology-segmentation"
           element={
             <PatientRoute>
