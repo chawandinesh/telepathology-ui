@@ -11,7 +11,7 @@ import { BsFacebook } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
 const Welcome = () => {
-  const navigate= useNavigate()
+  const navigate = useNavigate();
   return (
     <Col className="bg-white">
       <Row xs={12} className="m-0 welcome__header__shadow">
@@ -20,8 +20,12 @@ const Welcome = () => {
         </Col>
         <Col></Col>
         <Col className="welcome__header__last">
-          <button className="login__btn" onClick={() => navigate("/landing/signin")}>Login</button>
-          <button className="get__started__btn" onClick={() => navigate("/landing/signup")}>Getting Started</button>
+          <button className="login__btn" onClick={() => navigate("/landing/signin")}>
+            Login
+          </button>
+          <button className="get__started__btn" onClick={() => navigate("/landing/signup")}>
+            Getting Started
+          </button>
         </Col>
       </Row>
 
@@ -32,9 +36,10 @@ const Welcome = () => {
               <h2 className="getting__started__title">Getting Started</h2>
               <div className="hr__line" />
               <p className="getting__started__text">
-                It is a long established fact that a reader will be distracted by the readable content of a page when
-                looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
-                of letters, as opposed to using 'Content here, content here', making it look like readable English.
+                The motivating force for this activity is that it is not always possible to provide the best expertise
+                everywhere specially in remote areas. For a country like India this is particularly significant. While
+                the highest quality of expertise is available within the country, it is not available to a large section
+                of population in the rural areas.
               </p>
             </Col>
             <Col xs={7} className="getting__started__image">
