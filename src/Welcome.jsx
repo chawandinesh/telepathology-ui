@@ -6,11 +6,13 @@ import pathologyGirl from "../src/assets/images/pathologygirl.jpg";
 import gettingStartedImage from "../src/assets/images/gettingstarted.png";
 import trustMaleTwoImage from "../src/assets/images/trustmaletwo.png";
 import trustMaleOneImage from "../src/assets/images/trustmaleone.png";
-
-import { BsFacebook } from "react-icons/bs";
+import {useMediaQuery} from 'react-responsive'
+import { BsFacebook,BsInstagram,BsTwitter } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 
 const Welcome = () => {
+  const isMobile = useMediaQuery({maxWidth: "991px"})
+  console.log(isMobile)
   const navigate = useNavigate();
   return (
     <Col className="bg-white">
@@ -160,13 +162,13 @@ const Welcome = () => {
         </Col>
       </Row>
 
-      <Row xs={12} className="m-0 welcome__footer">
-        <Col xs={7}>
+      <Row xs={12} className="m-0 welcome__footer" style={{textAlign:  isMobile ? 'center' : 'left' }}>
+        <Col xs={12} lg={7}>
           <Row xs={12}>
             <p>
               Send your feedback to : <b>feedback@deeppath.com</b>
             </p>
-            <p>or</p>
+            {/* <p>or</p> */}
             <p>
               Fill this form :{" "}
               <b
@@ -182,10 +184,14 @@ const Welcome = () => {
             </p>
           </Row>
         </Col>
-        <Col xs={5} className=" d-flex align-items-start">
+        <Col xs={12} lg={5} className=" d-flex align-items-start" style={{justifyContent: isMobile ? "center" : ""}}>
           <Row>
             <p>Follow Us</p>
-            <BsFacebook />
+            <Col className="w-25 d-flex">
+            <BsFacebook className="pointer" />
+            <BsInstagram className="pointer" />
+            <BsTwitter className="pointer" />
+            </Col>
           </Row>
         </Col>
       </Row>

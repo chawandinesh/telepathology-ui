@@ -88,6 +88,30 @@
   background-color: #c4c4c4;
 }
 
+.b {
+  color: #0080ff !important
+}
+.w {
+  color: #fff !important
+}
+
+.bgb {
+  background-color: #0080ff !important
+}
+
+.bgw {
+  background-color: #fff !important
+}
+
+.gr {
+  color: #F2F2F2 !important
+}
+
+.bggr {
+  background-color: #F2F2F2 !important
+}
+
+
 .welcome__divider > span {
   position: absolute;
   color: #0080ff;
@@ -188,4 +212,16 @@
 
 .pointer {
     cursor: pointer;
+}
+
+.loginHeaderTitle {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Inter';
+}
+
+.loginHeaderTitle .active {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Inter';
 }
