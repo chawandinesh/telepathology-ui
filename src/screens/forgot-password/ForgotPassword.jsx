@@ -86,25 +86,26 @@ const ForgotPassword = () => {
         <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="d-flex">
             <img src={image()} alt="" className="logo-p img-fluid mb-3" />
-            <h1 className="patient-head">{titleName()}</h1>
+            <h1 className="patient-head b">{titleName()}</h1>
           </div>
           <br/>
 
           <input
             type="text"
             name="email"
-            placeholder="email@email.com"
+            placeholder="Enter Email"
             {...register("email")}
           />
           <p className="text-danger text-start pl-3">{_.get(errors, "email.message", " ")}</p>
-          <button className="mt-3 login-btn" type="submit">
+          <button className="mt-3 login-btn bgb text-white" type="submit">
           {loginLoading ?  <Spinner  animation="border" /> : "Login" }
           </button>
-          <div className="w-100 justify-content-center d-flex align-items-center text-white mb-4 text-center mt-2">
+          <div className="w-100 justify-content-center d-flex align-items-center b mb-4 text-center mt-2">
             go back to login ?{" "}
             <Button
-              style={{ color: "#66fcf1" }}
+              className="b"
               variant="link"
+              style={{fontWeight:'bold'}}
               onClick={() => {
                 navigate(loginLink());
               }}

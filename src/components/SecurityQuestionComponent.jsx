@@ -9,7 +9,7 @@ const SecurityQuestionComponent = ({label}) => {
     {label: "what is your favourite color?",name: "what is your favourite color?"}
   ];
   return <div className='mb-5'>
-       <Form.Label className="text-white">Security Question</Form.Label>
+       <Form.Label className="b">Security Question</Form.Label>
         <Form.Select aria-label="Default select example">
 
   <option>Select a question from the following options</option>
@@ -19,7 +19,7 @@ const SecurityQuestionComponent = ({label}) => {
   <option value="3">What is your favourite color?</option>
 </Form.Select>
 <Form.Group className="mb-3 mt-2" controlId="exampleForm.ControlInput1">
-    <Form.Label className="text-white">Security Answer</Form.Label>
+    <Form.Label className="b">Security Answer</Form.Label>
     <Form.Control type="text" placeholder="Your answer" />
   </Form.Group>
 

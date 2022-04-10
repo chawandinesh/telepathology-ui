@@ -205,7 +205,7 @@ function PatientRecordEntry() {
     <div className="patient__container">
       <div className="Main__wraper">
         <div className="add__record__container mb-5">
-          <span className="add__record__text">New Patient Enrollment</span>
+          <span className="add__record__text b">New Patient Enrollment</span>
           <span>
             <img src={logo1} className="patient_logo" alt="patient_logo"></img>
           </span>
@@ -219,7 +219,7 @@ function PatientRecordEntry() {
                   {eachField.name === "name" ? (
                     <Row>
                       <hr className="hr__tag mt-0 mb-4" />
-                      <h2 className="text-white mb-3">Basic Details</h2>
+                      <h2 className="b mb-3">Basic Details</h2>
                       <Col xs={2}>
                         {" "}
                         <SelectComponent
@@ -335,7 +335,7 @@ function PatientRecordEntry() {
             })}
             <hr className="hr__tag mt-5 mb-4" />
             <Row>
-              <h2 className="text-white mb-3">Emergency Contact Details </h2>
+              <h2 className="b mb-3">Emergency Contact Details </h2>
             </Row>
             {_.map(emergencyFields, (eachField) => {
               const { type, label, placeholder, name } = eachField;
@@ -374,13 +374,13 @@ function PatientRecordEntry() {
                 </>
               );
             })}
-            <Button className="w-100 mb-4 mt-2 primary__btn" variant="primary" type="submit">
+            <Button className="w-100 mb-4 mt-2 primary__btn bgb text-white" variant="primary" type="submit">
               {registerLoading ? <Spinner animation="border" /> : "Register"}
             </Button>
-            <div className="w-100 justify-content-center d-flex align-items-center text-white mb-4 text-center mt-2">
+            <div className="w-100 justify-content-center d-flex align-items-center b mb-4 text-center mt-2">
               Already registered ?{" "}
               <Button
-                style={{ color: "#66fcf1" }}
+                style={{ color: "#0080ff" , fontWeight:'bold'}}
                 variant="link"
                 onClick={() => {
                   navigate("/patient/login");

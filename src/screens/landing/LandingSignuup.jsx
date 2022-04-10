@@ -6,25 +6,25 @@ const LandingSignup = () => {
     const navigate = useNavigate()
   return (
     <div className="landing__container">
-      <div className="landing__header">
+      <div className="landing__header b">
         <span>AI Based Telepathology</span>
       </div>
-      <hr className="landing__hr" />
+      <hr className="landing__hr bgb" />
       <div className="signin__container">
         <div className="signin__patient">
-          <h3 className="text-white font-weight-bold">For Patients</h3>
-          <hr className="landing__hr" />
-          <p>A patient is any recipient of health care services that are performed by healthcare professionals.</p>
+          <h3 className="font-weight-bold b">For Patients</h3>
+          <hr className="landing__hr bgb" />
+          <p className="b">A patient is any recipient of health care services that are performed by healthcare professionals.</p>
           <div className="landing__signin__container">
-            <button className="landing__signin" onClick={() => navigate("/patient/registration ")}>Patient Registration</button>
+            <button className="landing__signin bgb text-white" onClick={() => navigate("/patient/registration ")}>Patient Registration</button>
           </div>
         </div>
         <div className="signin__pathologist">
-          <h3 className="text-white font-weight-bold">For Pathologist</h3>
-          <hr className="landing__hr" />
-          <p>The role of pathology is to detect and determine the causes of infections and disease.</p>
+          <h3 className="font-weight-bold b">For Pathologist</h3>
+          <hr className="landing__hr bgb" />
+          <p className="b">The role of pathology is to detect and determine the causes of infections and disease.</p>
           <div className="landing__signin__container">
-            <button className="landing__signin" onClick={() => navigate("/pathologist/registration")}>Pathologist Registration</button>
+            <button className="landing__signin bgb text-white" onClick={() => navigate("/pathologist/registration")}>Pathologist Registration</button>
           </div>
         </div>
         <div className="landing__img">

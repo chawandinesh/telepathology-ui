@@ -4,11 +4,11 @@ import _ from "lodash";
 function RadioComponent({ name, label, register, errorMessage }) {
   return (
     <Form.Group className="mb-3 text__field" controlId="formBasicEmail">
-      <Form.Label className="text-white">{label}</Form.Label>
+      <Form.Label className="b">{label}</Form.Label>
       <div className="mb-3 d-flex justify-content-start">
         <div class="form-check w-25">
           <input {...register("gender")} value="male" name="gender" class="form-check-input" type="radio" id="male" />
-          <label class="form-check-label text-white pl-1 pr-2" for="male">
+          <label class="form-check-label b pl-1 pr-2" for="male">
             Male
           </label>
         </div>
@@ -21,7 +21,7 @@ function RadioComponent({ name, label, register, errorMessage }) {
             type="radio"
             id="female"
           />
-          <label class="form-check-label text-white pl-1" for="female">
+          <label class="form-check-label b pl-1" for="female">
             Female
           </label>
         </div>
